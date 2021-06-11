@@ -72,10 +72,8 @@ void SetDCPixelFormat(HDC hDC);
 // to a unit normal vector of length one.
 void ReduceToUnit(float vector[3])
 {
-	float length;
-
 	// Calculate the length of the vector		
-	length = (float)sqrt((vector[0] * vector[0]) +
+	float length = (float)sqrt((vector[0] * vector[0]) +
 		(vector[1] * vector[1]) +
 		(vector[2] * vector[2]));
 
@@ -328,12 +326,13 @@ void szescian() {
 
 void walec(double h, double r) {
 	double x, y, alpha;
+	double rozdzielczosc = 16;
 	//dolna podstawa
 	glBegin(GL_TRIANGLE_FAN);
 		glColor3d(1, 0.5, 0);
 		glNormal3d(0, 0, -1);
 		glVertex3d(0, 0, 0);
-		for (alpha = 0.0; alpha <= 2 * GL_PI; alpha += GL_PI / 8.0) {
+		for (alpha = 0.0; alpha <= 2 * GL_PI; alpha += GL_PI / rozdzielczosc) {
 			x = r * sin(alpha);
 			y = r * cos(alpha);
 			glVertex3d(x, y, 0);
@@ -343,7 +342,7 @@ void walec(double h, double r) {
 	// sciana boczna
 	glBegin(GL_QUAD_STRIP);
 		glColor3d(1, 0.5, 0);
-		for (alpha = 0.0; alpha <= 2 * GL_PI; alpha += GL_PI / 8.0) {
+		for (alpha = 0.0; alpha <= 2 * GL_PI; alpha += GL_PI / rozdzielczosc) {
 			x = r * sin(alpha);
 			y = r * cos(alpha);
 			glNormal3d(sin(alpha), cos(alpha), 0.0);
@@ -357,7 +356,7 @@ void walec(double h, double r) {
 		glColor3d(1, 0.5, 0);
 		glNormal3d(0, 0, 1);
 		glVertex3d(0, 0, h);
-		for (alpha = 0.0; alpha >= -(2 * GL_PI); alpha -= GL_PI / 8.0) {
+		for (alpha = 0.0; alpha >= -(2 * GL_PI); alpha -= GL_PI / rozdzielczosc) {
 			x = r * sin(alpha);
 			y = r * cos(alpha);
 			glVertex3d(x, y, h);
@@ -367,13 +366,14 @@ void walec(double h, double r) {
 
 void ramie(double r1, double r2, double h, double d) {
 	double x, y, alpha;
+	double rozdzielczosc = 16;
 	// PIERWSZY POLWALEC
 	//dolna podstawa
 	glBegin(GL_TRIANGLE_FAN);
 		glColor3d(1, 0.5, 0);
 		glNormal3d(0, 0, -1);
 		glVertex3d(0, 0, 0);
-		for (alpha = GL_PI; alpha <= 2 * GL_PI; alpha += GL_PI / 8.0) {
+		for (alpha = GL_PI; alpha <= 2 * GL_PI; alpha += GL_PI / rozdzielczosc) {
 			x = r1 * sin(alpha);
 			y = r1 * cos(alpha);
 			glVertex3d(x, y, 0);
@@ -382,7 +382,7 @@ void ramie(double r1, double r2, double h, double d) {
 	// sciana boczna
 	glBegin(GL_QUAD_STRIP);
 		glColor3d(1, 0.5, 0);
-		for (alpha = GL_PI; alpha <= 2* GL_PI; alpha += GL_PI / 8.0) {
+		for (alpha = GL_PI; alpha <= 2* GL_PI; alpha += GL_PI / rozdzielczosc) {
 			x = r1 * sin(alpha);
 			y = r1 * cos(alpha);
 			glNormal3d(sin(alpha), cos(alpha), 0.0);
@@ -395,7 +395,7 @@ void ramie(double r1, double r2, double h, double d) {
 		glColor3d(1, 0.5, 0);
 		glNormal3d(0, 0, 1);
 		glVertex3d(0, 0, h);
-		for (alpha = 0.0; alpha >= -GL_PI; alpha -= GL_PI / 8.0) {
+		for (alpha = 0.0; alpha >= -GL_PI; alpha -= GL_PI / rozdzielczosc) {
 			x = r1 * sin(alpha);
 			y = r1 * cos(alpha);
 			glVertex3d(x, y, h);
@@ -408,7 +408,7 @@ void ramie(double r1, double r2, double h, double d) {
 		glColor3d(1, 0.5, 0);
 		glNormal3d(0, 0, -1);
 		glVertex3d(d, 0, 0);
-		for (alpha = 0; alpha <= GL_PI; alpha += GL_PI / 8.0) {
+		for (alpha = 0; alpha <= GL_PI; alpha += GL_PI / rozdzielczosc) {
 			x = r2 * sin(alpha) + d;
 			y = r2 * cos(alpha);
 			glVertex3d(x, y, 0);
@@ -417,7 +417,7 @@ void ramie(double r1, double r2, double h, double d) {
 	// sciana boczna
 	glBegin(GL_QUAD_STRIP);
 		glColor3d(1, 0.5, 0);
-		for (alpha = 0; alpha <= GL_PI; alpha += GL_PI / 8.0) {
+		for (alpha = 0; alpha <= GL_PI; alpha += GL_PI / rozdzielczosc) {
 			x = r2 * sin(alpha) + d;
 			y = r2 * cos(alpha);
 			glNormal3d(sin(alpha), cos(alpha), 0.0);
@@ -430,7 +430,7 @@ void ramie(double r1, double r2, double h, double d) {
 		glColor3d(1, 0.5, 0);
 		glNormal3d(0, 0, 1);
 		glVertex3d(d, 0, h);
-		for (alpha = -GL_PI; alpha >= -2 * GL_PI; alpha -= GL_PI / 8.0) {
+		for (alpha = -GL_PI; alpha >= -2 * GL_PI; alpha -= GL_PI / rozdzielczosc) {
 			x = r2 * sin(alpha) + d;
 			y = r2 * cos(alpha);
 			glVertex3d(x, y, h);
@@ -618,9 +618,9 @@ void RenderScene(void) {
 	
 	//szescian();
 	//walec(50, 20);
-	ramie(30, 10, 10, 35);
+	//ramie(30, 10, 10, 35);
 	//robot(rot1, rot2, rot3);
-	//dwa_roboty();
+	dwa_roboty();
 	//skrzynka();
 	
 	/////////////////////////////////////////////////////////////////
