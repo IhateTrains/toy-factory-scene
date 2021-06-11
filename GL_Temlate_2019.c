@@ -325,7 +325,6 @@ void szescian() {
 }
 
 void prostopadloscian(double dlugosc, double wysokosc, double szerokosc) {
-	glColor3d(1, 0.5, 0);
 	glBegin(GL_QUADS);
 		glNormal3d(0, 0, 1);
 		glVertex3d(dlugosc, 0, szerokosc);
@@ -365,7 +364,6 @@ void walec(double h, double r) {
 	double rozdzielczosc = 16;
 	//dolna podstawa
 	glBegin(GL_TRIANGLE_FAN);
-		glColor3d(1, 0.5, 0);
 		glNormal3d(0, 0, -1);
 		glVertex3d(0, 0, 0);
 		for (alpha = 0.0; alpha <= 2 * GL_PI; alpha += GL_PI / rozdzielczosc) {
@@ -377,7 +375,6 @@ void walec(double h, double r) {
 
 	// sciana boczna
 	glBegin(GL_QUAD_STRIP);
-		glColor3d(1, 0.5, 0);
 		for (alpha = 0.0; alpha <= 2 * GL_PI; alpha += GL_PI / rozdzielczosc) {
 			x = r * sin(alpha);
 			y = r * cos(alpha);
@@ -389,7 +386,6 @@ void walec(double h, double r) {
 
 	// podstawa gorna
 	glBegin(GL_TRIANGLE_FAN);
-		glColor3d(1, 0.5, 0);
 		glNormal3d(0, 0, 1);
 		glVertex3d(0, 0, h);
 		for (alpha = 0.0; alpha >= -(2 * GL_PI); alpha -= GL_PI / rozdzielczosc) {
@@ -406,7 +402,6 @@ void ramie(double r1, double r2, double h, double d) {
 	// PIERWSZY POLWALEC
 	//dolna podstawa
 	glBegin(GL_TRIANGLE_FAN);
-		glColor3d(1, 0.5, 0);
 		glNormal3d(0, 0, -1);
 		glVertex3d(0, 0, 0);
 		for (alpha = GL_PI; alpha <= 2 * GL_PI; alpha += GL_PI / rozdzielczosc) {
@@ -417,7 +412,6 @@ void ramie(double r1, double r2, double h, double d) {
 	glEnd();
 	// sciana boczna
 	glBegin(GL_QUAD_STRIP);
-		glColor3d(1, 0.5, 0);
 		for (alpha = GL_PI; alpha <= 2* GL_PI; alpha += GL_PI / rozdzielczosc) {
 			x = r1 * sin(alpha);
 			y = r1 * cos(alpha);
@@ -428,7 +422,6 @@ void ramie(double r1, double r2, double h, double d) {
 	glEnd();
 	// podstawa gorna
 	glBegin(GL_TRIANGLE_FAN);
-		glColor3d(1, 0.5, 0);
 		glNormal3d(0, 0, 1);
 		glVertex3d(0, 0, h);
 		for (alpha = 0.0; alpha >= -GL_PI; alpha -= GL_PI / rozdzielczosc) {
@@ -441,7 +434,6 @@ void ramie(double r1, double r2, double h, double d) {
 	// DRUGI POLWALEC
 	//dolna podstawa
 	glBegin(GL_TRIANGLE_FAN);
-		glColor3d(1, 0.5, 0);
 		glNormal3d(0, 0, -1);
 		glVertex3d(d, 0, 0);
 		for (alpha = 0; alpha <= GL_PI; alpha += GL_PI / rozdzielczosc) {
@@ -452,7 +444,6 @@ void ramie(double r1, double r2, double h, double d) {
 	glEnd();
 	// sciana boczna
 	glBegin(GL_QUAD_STRIP);
-		glColor3d(1, 0.5, 0);
 		for (alpha = 0; alpha <= GL_PI; alpha += GL_PI / rozdzielczosc) {
 			x = r2 * sin(alpha) + d;
 			y = r2 * cos(alpha);
@@ -463,7 +454,6 @@ void ramie(double r1, double r2, double h, double d) {
 	glEnd();
 	// podstawa gorna
 	glBegin(GL_TRIANGLE_FAN);
-		glColor3d(1, 0.5, 0);
 		glNormal3d(0, 0, 1);
 		glVertex3d(d, 0, h);
 		for (alpha = -GL_PI; alpha >= -2 * GL_PI; alpha -= GL_PI / rozdzielczosc) {
@@ -517,10 +507,16 @@ void ramie(double r1, double r2, double h, double d) {
 
 
 void zabawka() {
+	glColor3d(0.1, 0.3, 0.5);
 	double dlugoscNogi = 25;
+
 	double wysokoscKorpusu = 30;
 	double gruboscKorpusu = 10;
 	double szerokoscKorpusu = 35;
+
+	double wysokoscGlowy = 20;
+	double szerokoscGlowy = szerokoscKorpusu - 10;
+
 	glPushMatrix();
 	// noga robota
 	glTranslated(1, 0, 0);
@@ -542,24 +538,41 @@ void zabawka() {
 	// glowa robota
 	glPushMatrix();
 	glTranslated(0, dlugoscNogi + wysokoscKorpusu, 0);
-	prostopadloscian(gruboscKorpusu, 20, 25);
+	prostopadloscian(gruboscKorpusu, wysokoscGlowy, szerokoscGlowy);
+	// lewe oko
+	glPushMatrix();
+	glColor3d(1, 0, 0);
+	glTranslated(gruboscKorpusu, wysokoscGlowy - 8, 6);
+	glRotated(90, 0, 1, 0);
+	walec(1, 3);
+	glPopMatrix();
+	// prawe oko
+	glPushMatrix();
+	glColor3d(1, 0, 0);
+	glTranslated(gruboscKorpusu, wysokoscGlowy - 8, szerokoscGlowy-6);
+	glRotated(90, 0, 1, 0);
+	walec(1, 3);
+	glPopMatrix();
 	glPopMatrix();
 
+	glColor3d(0.1, 0.3, 0.5);
 	// lewe ramie robota
 	glPushMatrix();
 	glTranslated(5, dlugoscNogi+wysokoscKorpusu-10, -10);
-	glRotated(-90, 0, 0, 1);
+	glRotated(rot2, 0, 0, 1);
 	ramie(5, 5, 5, 8);
 	glTranslated(12, 0, 0);
+	glRotated(rot3, 0, 0, 1);
 	ramie(5, 5, 5, 8);
 	glPopMatrix();
 
 	// prawe ramie robota
 	glPushMatrix();
 	glTranslated(5, dlugoscNogi + wysokoscKorpusu - 10, -5+szerokoscKorpusu);
-	glRotated(-90, 0, 0, 1);
+	glRotated(rot2, 0, 0, 1);
 	ramie(5, 5, 5, 8);
 	glTranslated(12, 0, 0);
+	glRotated(rot3, 0, 0, 1);
 	ramie(5, 5, 5, 8);
 	glPopMatrix();
 }
@@ -570,6 +583,8 @@ void tasmociag() {
 
 
 void robot(double d1, double d2, double d3) {
+	glColor3d(1, 0.5, 0);
+
 	glPushMatrix();
 	glRotated(-90, 1, 0, 0);
 	glTranslated(0, 0, -50);
