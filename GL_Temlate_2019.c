@@ -324,6 +324,42 @@ void szescian() {
 	glEnd();
 }
 
+void prostopadloscian(double dlugosc, double wysokosc, double szerokosc) {
+	glColor3d(1, 0.5, 0);
+	glBegin(GL_QUADS);
+		glNormal3d(0, 0, 1);
+		glVertex3d(dlugosc, 0, szerokosc);
+		glVertex3d(dlugosc, wysokosc, szerokosc);
+		glVertex3d(0, wysokosc, szerokosc);
+		glVertex3d(0, 0, szerokosc);
+
+		glNormal3d(0, 0, -1);
+		glVertex3d(0, 0, 0);
+		glVertex3d(0, wysokosc, 0);
+		glVertex3d(dlugosc, wysokosc, 0);
+		glVertex3d(dlugosc, 0, 0);
+	glEnd();
+	glBegin(GL_QUAD_STRIP);
+		glNormal3d(1, 0, 0);
+		glVertex3d(dlugosc, wysokosc, 0);
+		glVertex3d(dlugosc, wysokosc, szerokosc);
+		glVertex3d(dlugosc, 0, 0);
+		glVertex3d(dlugosc, 0, szerokosc);
+
+		glNormal3d(0, -1, 0);
+		glVertex3d(0, 0, 0);
+		glVertex3d(0, 0, szerokosc);
+
+		glNormal3d(-1, 0, 0);
+		glVertex3d(0, wysokosc, 0);
+		glVertex3d(0, wysokosc, szerokosc);
+
+		glNormal3d(0, 1, 0);
+		glVertex3d(dlugosc, wysokosc, 0);
+		glVertex3d(dlugosc, wysokosc, szerokosc);
+	glEnd();
+}
+
 void walec(double h, double r) {
 	double x, y, alpha;
 	double rozdzielczosc = 16;
@@ -480,6 +516,101 @@ void ramie(double r1, double r2, double h, double d) {
 }
 
 
+void zabawka() {
+	double dlugoscNogi = 25;
+	double wysokoscKorpusu = 30;
+	double gruboscKorpusu = 10;
+	double szerokoscKorpusu = 35;
+	glPushMatrix();
+	// noga robota
+	glTranslated(1, 0, 0);
+	prostopadloscian(8, dlugoscNogi, 10);
+	glPopMatrix();
+
+	// noga robota
+	glPushMatrix();
+	glTranslated(1, 0, 15);
+	prostopadloscian(8, dlugoscNogi, 10);
+	glPopMatrix();
+
+	// korpus robota
+	glPushMatrix();
+	glTranslated(0, dlugoscNogi, -5);
+	prostopadloscian(gruboscKorpusu, wysokoscKorpusu, szerokoscKorpusu);
+	glPopMatrix();
+
+	// glowa robota
+	glPushMatrix();
+	glTranslated(0, dlugoscNogi + wysokoscKorpusu, 0);
+	prostopadloscian(gruboscKorpusu, 20, 25);
+	glPopMatrix();
+
+	// lewe ramie robota
+	glPushMatrix();
+	glTranslated(5, dlugoscNogi+wysokoscKorpusu-10, -10);
+	glRotated(-90, 0, 0, 1);
+	ramie(5, 5, 5, 8);
+	glTranslated(12, 0, 0);
+	ramie(5, 5, 5, 8);
+	glPopMatrix();
+
+	// prawe ramie robota
+	glPushMatrix();
+	glTranslated(5, dlugoscNogi + wysokoscKorpusu - 10, -5+szerokoscKorpusu);
+	glRotated(-90, 0, 0, 1);
+	ramie(5, 5, 5, 8);
+	glTranslated(12, 0, 0);
+	ramie(5, 5, 5, 8);
+	glPopMatrix();
+}
+
+void tasmociag() {
+
+}
+
+
+void robot(double d1, double d2, double d3) {
+	glPushMatrix();
+	glRotated(-90, 1, 0, 0);
+	glTranslated(0, 0, -50);
+
+	walec(5, 30);
+
+	glTranslated(0, 0, 5);
+	walec(40, 10);
+
+	// i
+	glTranslated(0, 0, 40);
+	glRotated(d1, 0, 0, 1);
+	walec(40, 10);
+	// l
+	glTranslated(0, 0, 40);
+	glRotated(90, 0, 1, 0);
+	glTranslated(0, 0, -20);
+	// m
+	walec(40, 10);
+	// n
+	glTranslated(0, 0, +40);
+	glRotated(90 + d2, 0, 0, 1);
+	ramie(15, 10, 5, 30);
+	// o
+	glTranslated(30, 0, -5);
+	glRotated(d3, 0, 0, 1);
+	ramie(15, 10, 5, 30);
+	glPopMatrix();
+}
+
+void dwa_roboty() {
+	glPushMatrix();
+	robot(rot1, rot2, rot3);
+	glPopMatrix();
+
+	glPushMatrix();
+	glTranslated(100, 0, 0);
+	robot(rot1, rot2, rot3);
+	glPopMatrix();
+}
+
 
 // LoadBitmapFile
 // opis: ³aduje mapê bitow¹ z pliku i zwraca jej adres.
@@ -549,49 +680,6 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 }
 
 
-void robot(double d1, double d2, double d3) {
-	glPushMatrix();
-		glRotated(-90, 1, 0, 0);
-		glTranslated(0, 0, -50);
-
-		walec(5, 30);
-
-		glTranslated(0, 0, 5);
-		walec(40, 10);
-
-		// i
-		glTranslated(0, 0, 40);
-		glRotated(d1, 0, 0, 1);
-		walec(40, 10);
-		// l
-		glTranslated(0,0,40);
-		glRotated(90,0,1,0);
-		glTranslated(0,0,-20);
-		// m
-		walec(40, 10);
-		// n
-		glTranslated(0,0,+40);
-		glRotated(90+d2, 0, 0, 1);
-		ramie(15, 10, 5, 30);
-		// o
-		glTranslated(30, 0, -5);
-		glRotated(d3,0,0,1);
-		ramie(15, 10, 5, 30);
-	glPopMatrix();
-}
-
-void dwa_roboty() {
-	glPushMatrix();
-		robot(rot1, rot2, rot3);
-	glPopMatrix();
-
-	glPushMatrix();
-		glTranslated(100, 0, 0);
-		robot(rot1, rot2, rot3);
-	glPopMatrix();
-}
-
-
 // Called to draw scene
 void RenderScene(void) {
 	//float normal[3];	// Storage for calculated surface normal
@@ -620,8 +708,9 @@ void RenderScene(void) {
 	//walec(50, 20);
 	//ramie(30, 10, 10, 35);
 	//robot(rot1, rot2, rot3);
-	dwa_roboty();
+	//dwa_roboty();
 	//skrzynka();
+	zabawka();
 	
 	/////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////
