@@ -36,7 +36,7 @@
 HPALETTE hPalette = NULL;
 
 // Application name and instance storeage
-static LPCTSTR lpszAppName = "GL Template";
+static LPCTSTR lpszAppName = "Toy Factory";
 static HINSTANCE hInstance;
 
 // Rotation amounts
