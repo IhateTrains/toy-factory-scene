@@ -50,12 +50,13 @@ static GLsizei lastWidth;
 // Opis tekstury
 BITMAPINFOHEADER	bitmapInfoHeader;	// nag³ówek obrazu
 unsigned char*		bitmapData;			// dane tekstury
-unsigned int		texture[2];			// obiekt tekstury
+unsigned int		texture[3];			// obiekt tekstury
 
 
 
 unsigned int licznik;
 double rot1, rot2, rot3;
+int tasmociagStartPos = 0;
 
 
 										// Declaration for Window procedure
@@ -200,6 +201,56 @@ void SetupRC()
 	// Black brush
 	glColor3f(0.0, 0.0, 0.0);
 }
+
+void podloga() {
+	glColor3d(1, 1, 1);
+	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
+
+	glBegin(GL_QUADS);
+
+	glNormal3d(0, 1, 0);
+	double f = 100;
+	glTexCoord2d(0.0, 0.0); glVertex3d(-640, 0, -640);
+	glTexCoord2d(0.0, f); glVertex3d(-640, 0, 640);
+	glTexCoord2d(f, f); glVertex3d(640, 0, 640);
+	glTexCoord2d(f, 0.0); glVertex3d(640, 0, -640);
+
+	glEnd();
+
+	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
+}
+
+void sciany() {
+
+	glDisable(GL_CULL_FACE);
+	glPolygonMode(GL_BACK, GL_FILL);
+
+	glColor3d(0.5, 0.5, 0.5);
+	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
+	glBindTexture(GL_TEXTURE_2D, texture[2]);
+
+	double f = 1;
+	glBegin(GL_QUADS);
+
+	glNormal3d(0, 0, 1);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-640, 300, -640);
+	glTexCoord2d(0.0, f); glVertex3d(-640, 0, -640);
+	glTexCoord2d(f, f); glVertex3d(640, 0, -640);
+	glTexCoord2d(f, 0.0); glVertex3d(640, 300, -640);
+
+
+
+
+	glEnd();
+
+	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
+
+
+	glEnable(GL_CULL_FACE);
+	glPolygonMode(GL_BACK, GL_LINE);
+}
+
 
 void skrzynka(void)
 {
@@ -577,8 +628,57 @@ void zabawka() {
 	glPopMatrix();
 }
 
-void tasmociag() {
 
+void tasmociag() {
+	glDisable(GL_CULL_FACE);
+	glPolygonMode(GL_BACK, GL_FILL);
+
+	// gora
+	glBegin(GL_QUADS);
+	glNormal3d(0, 1, 0);
+
+	for (int i = 0; i < 40; ++i) {
+		if (i % 2 == 0) {
+			glColor3d(0, 0, 0);
+		}
+		else {
+			glColor3d(0.2, 0.2, 0.2);
+		}
+		glVertex3d(-1000 + (double)i * 30 + 30 + tasmociagStartPos, 35, 50);
+		glVertex3d(-1000 + (double)i * 30 + 30 + tasmociagStartPos, 35, 0);
+		glVertex3d(-1000 + (double)i * 30 + tasmociagStartPos, 35, 0);
+		glVertex3d(-1000 + (double)i * 30 + tasmociagStartPos, 35, 50);
+	}
+	glEnd();
+
+	// dol
+	glBegin(GL_QUADS);
+	glNormal3d(0, -1, 0);
+
+	for (int i = 0; i < 40; ++i) {
+		if (i % 2 == 0) {
+			glColor3d(0, 0, 0);
+		}
+		else {
+			glColor3d(0.2, 0.2, 0.2);
+		}
+		glVertex3d(-500 + (double)i * 30 - tasmociagStartPos, 5, 50);
+		glVertex3d(-500 + (double)i * 30 - tasmociagStartPos, 5, 0);
+		glVertex3d(-500 + (double)i * 30 + 30 - tasmociagStartPos, 5, 0);
+		glVertex3d(-500 + (double)i * 30 + 30 - tasmociagStartPos, 5, 50);
+	}
+	glEnd();
+
+	// zabawki
+	for (int i = 0; i < 40; i += 2) {
+		glPushMatrix();
+		glTranslated(-1000 + (double)i * 30 + tasmociagStartPos, 36, 10);
+		zabawka();
+		glPopMatrix();
+	}
+
+	glPolygonMode(GL_BACK, GL_LINE);
+	glEnable(GL_CULL_FACE);
 }
 
 
@@ -725,7 +825,10 @@ void RenderScene(void) {
 	//robot(rot1, rot2, rot3);
 	//dwa_roboty();
 	//skrzynka();
-	zabawka();
+	//zabawka();
+	podloga();
+	sciany();
+	tasmociag();
 	
 	/////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////
@@ -927,7 +1030,7 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 	{
 		// Window creation, setup for OpenGL
 	case WM_CREATE:
-		SetTimer(hWnd,101,200,NULL);
+		SetTimer(hWnd,101,100,NULL);
 
 		// Store the device context
 		hDC = GetDC(hWnd);
@@ -945,15 +1048,17 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 		glGenTextures(2, &texture[0]);                  // tworzy obiekt tekstury			
 
 														// ³aduje pierwszy obraz tekstury:
-		bitmapData = LoadBitmapFile("Bitmapy\\checker.bmp", &bitmapInfoHeader);
+		bitmapData = LoadBitmapFile("Bitmapy\\floor_small.bmp", &bitmapInfoHeader);
 
 		glBindTexture(GL_TEXTURE_2D, texture[0]);       // aktywuje obiekt tekstury
+
+
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 		// tworzy obraz tekstury
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth,
@@ -979,6 +1084,26 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 		if (bitmapData)
 			free(bitmapData);
 
+
+		// ³aduje trzeci obraz tekstury:
+		bitmapData = LoadBitmapFile("Bitmapy\\corrugated.bmp", &bitmapInfoHeader);
+		glBindTexture(GL_TEXTURE_2D, texture[2]);       // aktywuje obiekt tekstury
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		// tworzy obraz tekstury
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth,
+			bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData);
+
+		if (bitmapData)
+			free(bitmapData);
+
+
+
 		// ustalenie sposobu mieszania tekstury z t³em
 		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 		break;
@@ -1003,7 +1128,8 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 		// Window is resized.
 	case WM_TIMER:
 		if (wParam == 101) {
-			licznik++;
+			++licznik;
+			/*
 			if (licznik < 15) {
 				rot1 -= 10;
 				rot2 += 15.0;
@@ -1012,8 +1138,12 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 				rot1 += 10;
 				rot2 -= 15.0;
 			}
+
 			if (licznik > 30)
-				licznik = 0;
+				licznik = 0;*/
+
+			// tasmociag
+			tasmociagStartPos = licznik % 60;
 			InvalidateRect(hWnd, NULL, FALSE);
 		}
 		break;
