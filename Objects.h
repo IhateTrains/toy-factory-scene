@@ -6,8 +6,8 @@ extern double rot1, rot2, rot3;
 
 
 void podloga();
-
 void sciany();
+void dach();
 
 
 void skrzynka();
