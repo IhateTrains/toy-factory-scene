@@ -17,8 +17,8 @@ void podloga() {
 	glBegin(GL_QUADS);
 
 	glNormal3d(0, 1, 0);
-	int k = 3;
-	double f = 50;
+	const int k = 3;
+	const double f = 50;
 	glTexCoord2d(0.0, 0.0); glVertex3d(-k * 128, 0, -k * 128);
 	glTexCoord2d(0.0, f); glVertex3d(-k * 128, 0, k * 128);
 	glTexCoord2d(f, f); glVertex3d(k * 128, 0, k * 128);
