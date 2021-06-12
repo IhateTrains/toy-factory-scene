@@ -179,7 +179,7 @@ void szescian() {
 	glEnd();
 }
 
-void prostopadloscian(double dlugosc, double wysokosc, double szerokosc) {
+void prostopadloscian(const double dlugosc, const double wysokosc, const double szerokosc) {
 	glBegin(GL_QUADS);
 	glNormal3d(0, 0, 1);
 	glVertex3d(dlugosc, 0, szerokosc);
@@ -334,7 +334,7 @@ void ramie(double r1, double r2, double h, double d) {
 	};
 	float norm[3];
 	calcNormal(v, norm);
-	glNormal3d(norm[0], norm[1], norm[2]);
+	glNormal3f(norm[0], norm[1], norm[2]);
 	glVertex3d(d, -r2, h);
 	glVertex3d(0, -r1, h);
 	glVertex3d(0, -r1, 0);
@@ -362,14 +362,14 @@ void ramie(double r1, double r2, double h, double d) {
 
 void zabawka() {
 	glColor3d(0.1, 0.3, 0.5);
-	double dlugoscNogi = 25;
+	const double dlugoscNogi = 25;
 
-	double wysokoscKorpusu = 30;
-	double gruboscKorpusu = 10;
-	double szerokoscKorpusu = 35;
+	const double wysokoscKorpusu = 30;
+	const double gruboscKorpusu = 10;
+	const double szerokoscKorpusu = 35;
 
-	double wysokoscGlowy = 20;
-	double szerokoscGlowy = szerokoscKorpusu - 10;
+	const double wysokoscGlowy = 20;
+	const double szerokoscGlowy = szerokoscKorpusu - 10;
 
 	glPushMatrix();
 	// noga robota
@@ -446,10 +446,10 @@ void tasmociag() {
 		else {
 			glColor3d(0.2, 0.2, 0.2);
 		}
-		glVertex3d(-1000 + (double)i * 30 + 30 + tasmociagStartPos, 35, 50);
-		glVertex3d(-1000 + (double)i * 30 + 30 + tasmociagStartPos, 35, 0);
-		glVertex3d(-1000 + (double)i * 30 + tasmociagStartPos, 35, 0);
-		glVertex3d(-1000 + (double)i * 30 + tasmociagStartPos, 35, 50);
+		glVertex3d(-1000 + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, 50);
+		glVertex3d(-1000 + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, 0);
+		glVertex3d(-1000 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 0);
+		glVertex3d(-1000 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 50);
 	}
 	glEnd();
 
@@ -464,17 +464,17 @@ void tasmociag() {
 		else {
 			glColor3d(0.2, 0.2, 0.2);
 		}
-		glVertex3d(-500 + (double)i * 30 - tasmociagStartPos, 5, 50);
-		glVertex3d(-500 + (double)i * 30 - tasmociagStartPos, 5, 0);
-		glVertex3d(-500 + (double)i * 30 + 30 - tasmociagStartPos, 5, 0);
-		glVertex3d(-500 + (double)i * 30 + 30 - tasmociagStartPos, 5, 50);
+		glVertex3d(-500 + static_cast<double>(i) * 30 - tasmociagStartPos, 5, 50);
+		glVertex3d(-500 + static_cast<double>(i) * 30 - tasmociagStartPos, 5, 0);
+		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 - tasmociagStartPos, 5, 0);
+		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 - tasmociagStartPos, 5, 50);
 	}
 	glEnd();
 
 	// zabawki
 	for (int i = 0; i < 40; i += 2) {
 		glPushMatrix();
-		glTranslated(-1000 + (double)i * 30 + tasmociagStartPos, 36, 10);
+		glTranslated(-1000 + static_cast<double>(i) * 30 + tasmociagStartPos, 36, 10);
 		zabawka();
 		glPopMatrix();
 	}
@@ -483,7 +483,7 @@ void tasmociag() {
 	glEnable(GL_CULL_FACE);
 }
 
-void robot(double d1, double d2, double d3) {
+void robot(const double d1, const double d2, const double d3) {
 	glColor3d(1, 0.5, 0);
 
 	glPushMatrix();

@@ -13,11 +13,11 @@ void podloga();
 void sciany();
 
 
-void skrzynka(void);
+void skrzynka();
 
-void walec01(void);
+void walec01();
 
-void kula(void);
+void kula();
 
 
 
