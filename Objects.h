@@ -1,9 +1,6 @@
 #pragma once
 
-
-
-
-extern unsigned int texture[3];
+extern unsigned int texture[5];
 extern int tasmociagStartPos;
 extern double rot1, rot2, rot3;
 

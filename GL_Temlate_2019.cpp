@@ -30,7 +30,7 @@
 #define glRGB(x, y, z)	glColor3ub((GLubyte)x, (GLubyte)y, (GLubyte)z)
 #define BITMAP_ID 0x4D42		// identyfikator formatu BMP
 
-unsigned int		texture[5];			// obiekt tekstury
+unsigned int texture[5];			// obiekt tekstury
 
 unsigned int licznik;
 double rot1, rot2, rot3;
@@ -93,12 +93,7 @@ void ChangeSize(const GLsizei w, GLsizei h)
 		glOrtho(-nRange*w / h, nRange*w / h, -nRange, nRange, -nRange, nRange);
 
 	// Establish perspective: 
-	
 	//gluPerspective(60.0f,fAspect,1.0,400);
-	//gluPerspective( /* field of view in degree */ 60.0,
-	//	/* aspect ratio */ fAspect ,
-	//	/* Z near */ 10.0, /* Z far */ 400.0);
-	//gluPerspective(45, 1,1,10);
 	
 	
 
@@ -439,7 +434,7 @@ char floorTexture[] = "Bitmapy\\floor_small.bmp";
 char crateTexture[] = "Bitmapy\\crate.bmp";
 char wallTexture[] = "Bitmapy\\corrugated.bmp";
 char roofTexture[] = "Bitmapy\\metal_roofing.bmp";
-char grassTexture[] = "Bitmapy\\GRASS.bmp";
+char grassTexture[] = "Bitmapy\\GRASS.BMP";
 
 
 // Window procedure, handles all messages for this program
@@ -470,9 +465,9 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 		hRC = wglCreateContext(hDC);
 		wglMakeCurrent(hDC, hRC);
 		SetupRC();
-		glGenTextures(2, &texture[0]);                  // tworzy obiekt tekstury			
+		glGenTextures(5, &texture[0]);                  // tworzy obiekt tekstury			
 
-														// ³aduje pierwszy obraz tekstury:
+		// ³aduje pierwszy obraz tekstury:
 		bitmapData = LoadBitmapFile(floorTexture, &bitmapInfoHeader);
 
 		glBindTexture(GL_TEXTURE_2D, texture[0]);       // aktywuje obiekt tekstury
@@ -527,7 +522,7 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 		if (bitmapData)
 			free(bitmapData);
 
-
+		
 		// ³aduje czwarty obraz tekstury:
 		bitmapData = LoadBitmapFile(roofTexture, &bitmapInfoHeader);
 		glBindTexture(GL_TEXTURE_2D, texture[3]);       // aktywuje obiekt tekstury
@@ -546,7 +541,7 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 			free(bitmapData);
 
 
-		// ³aduje czwarty obraz tekstury:
+		// ³aduje piaty obraz tekstury:
 		bitmapData = LoadBitmapFile(grassTexture, &bitmapInfoHeader);
 		glBindTexture(GL_TEXTURE_2D, texture[4]);       // aktywuje obiekt tekstury
 
@@ -562,7 +557,6 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 
 		if (bitmapData)
 			free(bitmapData);
-
 
 
 		// ustalenie sposobu mieszania tekstury z t³em

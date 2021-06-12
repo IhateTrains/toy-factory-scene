@@ -10,25 +10,42 @@
 constexpr auto GL_PI = 3.14;
 
 void podloga() {
-	glColor3d(0.5, 0.5, 0.5);
-	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
-	glBindTexture(GL_TEXTURE_2D, texture[0]);
+	glColor3d(1, 1, 1);
+	const double k = 3;
+	const double f = 50;
 
 	glPushMatrix();
 	glBegin(GL_QUADS);
-
 	glNormal3d(0, 1, 0);
-	const double k = 3;
-	const double f = 50;
+
+	// podloga fabryki
+	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
+	glBindTexture(GL_TEXTURE_2D, texture[0]);
 	glTexCoord2d(0.0, 0.0); glVertex3d(-k * 128, 0, -k * 128);
 	glTexCoord2d(0.0, f); glVertex3d(-k * 128, 0, k * 128);
 	glTexCoord2d(f, f); glVertex3d(k * 128, 0, k * 128);
 	glTexCoord2d(f, 0.0); glVertex3d(k * 128, 0, -k * 128);
+	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
 
 	glEnd();
 	glPopMatrix();
 
+/*
+	glPushMatrix();
+	glBegin(GL_QUADS);
+	glNormal3d(0, 1, 0);
+
+	// trawa
+	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
+	glBindTexture(GL_TEXTURE_2D, texture[4]);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-k * 256, -1, -k * 256);
+	glTexCoord2d(0.0, f); glVertex3d(-k * 256, -1, k * 256);
+	glTexCoord2d(f, f); glVertex3d(k * 256, -1, k * 256);
+	glTexCoord2d(f, 0.0); glVertex3d(k * 256, -1, -k * 256);
 	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
+
+	glEnd();
+	glPopMatrix();*/
 }
 
 void sciany() {
