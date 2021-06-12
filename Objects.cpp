@@ -136,10 +136,9 @@ void skrzynka()
 {
 	glColor3d(0.8, 0.7, 0.3);
 
-
 	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
 
-	glBindTexture(GL_TEXTURE_2D, texture[0]);
+	glBindTexture(GL_TEXTURE_2D, texture[1]);
 	glBegin(GL_QUADS);
 	glNormal3d(0, 0, 1);
 	glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, 25);
@@ -156,34 +155,39 @@ void skrzynka()
 	glTexCoord2d(1.0, 0.0); glVertex3d(25, 25, -25);
 	glEnd();
 
-	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
-
 
 
 	glBegin(GL_QUADS);
+	glBindTexture(GL_TEXTURE_2D, texture[1]);
 	glNormal3d(0, 0, -1);
-	glVertex3d(25, 25, -25);
-	glVertex3d(25, -25, -25);
-	glVertex3d(-25, -25, -25);
-	glVertex3d(-25, 25, -25);
+	glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, -25);
+	glTexCoord2d(0.0, 1.0); glVertex3d(25, -25, -25);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-25, -25, -25);
+	glTexCoord2d(1.0, 0.0); glVertex3d(-25, 25, -25);
 
 	glNormal3d(-1, 0, 0);
-	glVertex3d(-25, 25, -25);
-	glVertex3d(-25, -25, -25);
-	glVertex3d(-25, -25, 25);
-	glVertex3d(-25, 25, 25);
+	glBindTexture(GL_TEXTURE_2D, texture[1]);
+	glTexCoord2d(1.0, 1.0); glVertex3d(-25, 25, -25);
+	glTexCoord2d(0.0, 1.0); glVertex3d(-25, -25, -25);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-25, -25, 25);
+	glTexCoord2d(1.0, 0.0); glVertex3d(-25, 25, 25);
 
-	glNormal3d(0, 1, 0);
-	glVertex3d(25, 25, 25);
-	glVertex3d(25, 25, -25);
-	glVertex3d(-25, 25, -25);
-	glVertex3d(-25, 25, 25);
+	// wierzch skrzynki
+	glColor3d(0.0, 0.0, 0.0);
+	glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, 25);
+	glTexCoord2d(0.0, 1.0); glVertex3d(25, 25, -25);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-25, 25, -25);
+	glTexCoord2d(1.0, 0.0); glVertex3d(-25, 25, 25);
 
+	glColor3d(0.8, 0.7, 0.3);
 	glNormal3d(0, -1, 0);
-	glVertex3d(25, -25, 25);
-	glVertex3d(-25, -25, 25);
-	glVertex3d(-25, -25, -25);
-	glVertex3d(25, -25, -25);
+	glBindTexture(GL_TEXTURE_2D, texture[1]);
+	glTexCoord2d(1.0, 1.0); glVertex3d(25, -25, 25);
+	glTexCoord2d(0.0, 1.0); glVertex3d(-25, -25, 25);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-25, -25, -25);
+	glTexCoord2d(1.0, 0.0); glVertex3d(25, -25, -25);
+
+	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
 	glEnd();
 }
 
@@ -598,6 +602,27 @@ void robot(const double d1, const double d2, const double d3) {
 	glRotated(d3, 0, 0, 1);
 	ramie(15, 10, 5, 30);
 
+	glPopMatrix();
+}
+
+void ur16e() {
+	double rotacjaDolu = 5;
+
+	glPushMatrix();
+
+	glRotated(-90, 1, 0, 0);
+	walec(5, 12);
+	glTranslated(0, 0, 5);
+	glRotated(rotacjaDolu, 0, 0, 1);
+	walec(30, 10);
+
+	/*glTranslated(0, 30, 0);
+	glRotated(90, 1, 0, 0);
+	walec(40, 10);
+	glTranslated(0, 30, 0);
+	glRotated(90, 1, 0, 0);
+	walec(90, 10);
+	*/
 	glPopMatrix();
 }
 

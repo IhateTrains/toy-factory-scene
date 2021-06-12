@@ -37,3 +37,5 @@ void tasmociag();
 void robot(double d1, double d2, double d3);
 
 void dwa_roboty();
+
+void ur16e();
