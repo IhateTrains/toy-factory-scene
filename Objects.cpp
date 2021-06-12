@@ -2,7 +2,7 @@
 #include "Normal.h"
 
 #include <Windows.h>            // Window defines
-#include <gl/gl.h>              // OpenGL
+#include <gl/GL.h>              // OpenGL
 #include <gl/GLU.h>             // GLU library
 #include <cmath>				// Define for sqrt
 

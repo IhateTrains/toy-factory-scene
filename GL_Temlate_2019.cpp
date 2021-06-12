@@ -23,11 +23,9 @@
 
 #include "Template.h"
 #include "Objects.h"
-#include <windows.h>            // Window defines
-#include <gl\gl.h>              // OpenGL
-#include <gl\glu.h>             // GLU library
-#include <math.h>				// Define for sqrt
-#include <stdio.h>
+#include <Windows.h>            // Window defines
+#include <gl/GL.h>              // OpenGL
+#include <cstdio>
 
 #define glRGB(x, y, z)	glColor3ub((GLubyte)x, (GLubyte)y, (GLubyte)z)
 #define BITMAP_ID 0x4D42		// identyfikator formatu BMP
@@ -40,7 +38,7 @@ int tasmociagStartPos = 0;
 
 
 // Color Palette handle
-HPALETTE hPalette = NULL;
+HPALETTE hPalette = nullptr;
 
 // Application name and instance storeage
 static LPCTSTR lpszAppName = "Toy Factory";
@@ -82,7 +80,7 @@ void ChangeSize(GLsizei w, GLsizei h)
 	lastWidth = w;
 	lastHeight = h;
 
-	fAspect = (GLfloat)w / (GLfloat)h;
+	fAspect = static_cast<GLfloat>(w) / static_cast<GLfloat>(h);
 	// Set Viewport to window dimensions
 	glViewport(0, 0, w, h);
 
