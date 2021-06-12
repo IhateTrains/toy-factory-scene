@@ -200,10 +200,10 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 	fread(bitmapImage, 1, bitmapInfoHeader->biSizeImage, filePtr);
 
 	// sprawdza, czy dane zosta³y wczytane
-	if (bitmapImage == NULL)
+	if (bitmapImage == nullptr)
 	{
 		fclose(filePtr);
-		return NULL;
+		return nullptr;
 	}
 
 	// zamienia miejscami sk³adowe R i B 
@@ -302,15 +302,11 @@ HPALETTE GetOpenGLPalette(const HDC hDC)
 {
 	HPALETTE hRetPal = nullptr;	// Handle to palette to be created
 	PIXELFORMATDESCRIPTOR pfd;	// Pixel Format Descriptor
-	LOGPALETTE *pPal;			// Pointer to memory for logical palette
-	int nPixelFormat;			// Pixel format index
-	int i;						// Counting variable
-	BYTE RedRange, GreenRange, BlueRange;
 	// Range for each color entry (7,7,and 3)
 
 
 	// Get the pixel format index and retrieve the pixel format description
-	nPixelFormat = GetPixelFormat(hDC);
+	const int nPixelFormat = GetPixelFormat(hDC); // Pixel format index
 	DescribePixelFormat(hDC, nPixelFormat, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
 
 	// Does this pixel format require a palette?  If not, do not create a
@@ -322,7 +318,7 @@ HPALETTE GetOpenGLPalette(const HDC hDC)
 	const int nColors = 1 << pfd.cColorBits; // Number of entries in palette
 
 	// Allocate space for a logical palette structure plus all the palette entries
-	pPal = (LOGPALETTE*)malloc(sizeof(LOGPALETTE) + nColors * sizeof(PALETTEENTRY));
+	auto pPal = static_cast<LOGPALETTE*>(malloc(sizeof(LOGPALETTE) + nColors * sizeof(PALETTEENTRY))); // Pointer to memory for logical palette
 
 	// Fill in palette header 
 	pPal->palVersion = 0x300;		// Windows 3.0
@@ -330,13 +326,16 @@ HPALETTE GetOpenGLPalette(const HDC hDC)
 
 								   // Build mask of all 1's.  This creates a number represented by having
 								   // the low order x bits set, where x = pfd.cRedBits, pfd.cGreenBits, and
-								   // pfd.cBlueBits.  
-	RedRange = (1 << pfd.cRedBits) - 1;
-	GreenRange = (1 << pfd.cGreenBits) - 1;
-	BlueRange = (1 << pfd.cBlueBits) - 1;
+								   // pfd.cBlueBits.
+
+
+	// Range for each color entry (7,7,and 3)
+	const BYTE RedRange = (1 << pfd.cRedBits) - 1;
+	const BYTE GreenRange = (1 << pfd.cGreenBits) - 1;
+	const BYTE BlueRange = (1 << pfd.cBlueBits) - 1;
 
 	// Loop through all the palette entries
-	for (i = 0; i < nColors; i++)
+	for (int i = 0; i < nColors; ++i)
 	{
 		// Fill in the 8-bit equivalents for each component
 		pPal->palPalEntry[i].peRed = (i >> pfd.cRedShift) & RedRange;
@@ -380,17 +379,17 @@ int APIENTRY WinMain(HINSTANCE       hInst,
 
 	// Register Window style
 	wc.style = CS_HREDRAW | CS_VREDRAW;
-	wc.lpfnWndProc = (WNDPROC)WndProc;
+	wc.lpfnWndProc = static_cast<WNDPROC>(WndProc);
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = hInstance;
-	wc.hIcon = NULL;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wc.hIcon = nullptr;
+	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 
 	// No need for background brush for OpenGL window
-	wc.hbrBackground = NULL;
+	wc.hbrBackground = nullptr;
 
-	wc.lpszMenuName = NULL;
+	wc.lpszMenuName = nullptr;
 	wc.lpszClassName = lpszAppName;
 
 	// Register the window class
@@ -668,14 +667,14 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 		if (wParam == '6')
 			rot3 += 5.0f;
 
-		InvalidateRect(hWnd, NULL, FALSE);
+		InvalidateRect(hWnd, nullptr, FALSE);
 	}
 	break;
 
 	default:   // Passes it on if unproccessed
-		return (DefWindowProc(hWnd, message, wParam, lParam));
+		return DefWindowProc(hWnd, message, wParam, lParam);
 
 	}
 
-	return (0L);
+	return 0L;
 }

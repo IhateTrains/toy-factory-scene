@@ -128,7 +128,7 @@ void walec01()
 	glPopMatrix();
 }
 
-void kula(void)
+void kula()
 {
 	GLUquadricObj* obj = gluNewQuadric();
 	gluQuadricTexture(obj, GL_TRUE);
@@ -141,7 +141,7 @@ void kula(void)
 }
 
 void szescian() {
-	int a = 20;
+	const int a = 20;
 	glColor3d(1, 0.5, 0);
 	glBegin(GL_QUADS);
 	glNormal3d(0, 0, 1);
@@ -212,9 +212,9 @@ void prostopadloscian(const double dlugosc, const double wysokosc, const double 
 	glEnd();
 }
 
-void walec(double h, double r) {
+void walec(const double h, const double r) {
 	double x, y, alpha;
-	double rozdzielczosc = 16;
+	const double rozdzielczosc = 16;
 	//dolna podstawa
 	glBegin(GL_TRIANGLE_FAN);
 	glNormal3d(0, 0, -1);
@@ -249,9 +249,9 @@ void walec(double h, double r) {
 	glEnd();
 }
 
-void ramie(double r1, double r2, double h, double d) {
+void ramie(const double r1, const double r2, const double h, const double d) {
 	double x, y, alpha;
-	double rozdzielczosc = 16;
+	const double rozdzielczosc = 16;
 	// PIERWSZY POLWALEC
 	//dolna podstawa
 	glBegin(GL_TRIANGLE_FAN);

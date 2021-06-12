@@ -1,16 +1,18 @@
 #pragma once
 
-#include <math.h>				// Define for sqrt
+#include <cmath>				// Define for sqrt
 
 
 // Reduces a normal vector specified as a set of three coordinates,
 // to a unit normal vector of length one.
-void ReduceToUnit(float vector[3])
+inline void ReduceToUnit(float vector[3])
 {
 	// Calculate the length of the vector		
-	float length = (float)sqrt((vector[0] * vector[0]) +
-		(vector[1] * vector[1]) +
-		(vector[2] * vector[2]));
+	float length = sqrt(
+		vector[0] * vector[0] +
+		vector[1] * vector[1] +
+		vector[2] * vector[2]
+	);
 
 	// Keep the program from blowing up by providing an exceptable
 	// value for vectors that may calculated too close to zero.
@@ -26,7 +28,7 @@ void ReduceToUnit(float vector[3])
 
 
 // Points p1, p2, & p3 specified in counter clock-wise order
-void calcNormal(float v[3][3], float out[3])
+inline void calcNormal(float v[3][3], float out[3])
 {
 	float v1[3], v2[3];
 	static const int x = 0;
