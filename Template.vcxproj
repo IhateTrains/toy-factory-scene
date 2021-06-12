@@ -142,12 +142,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Normal.h" />
+    <ClInclude Include="Objects.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Template.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GL_Temlate_2019.c" />
+    <ClCompile Include="GL_Temlate_2019.cpp" />
+    <ClCompile Include="Objects.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Template.rc" />
