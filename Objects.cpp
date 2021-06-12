@@ -114,10 +114,9 @@ void skrzynka(void)
 	glEnd();
 }
 
-void walec01(void)
+void walec01()
 {
-	GLUquadricObj* obj;
-	obj = gluNewQuadric();
+	GLUquadricObj* obj = gluNewQuadric();
 	gluQuadricNormals(obj, GLU_SMOOTH);
 	glColor3d(1, 0, 0);
 	glPushMatrix();
@@ -131,8 +130,7 @@ void walec01(void)
 
 void kula(void)
 {
-	GLUquadricObj* obj;
-	obj = gluNewQuadric();
+	GLUquadricObj* obj = gluNewQuadric();
 	gluQuadricTexture(obj, GL_TRUE);
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
 	glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);

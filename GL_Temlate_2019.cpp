@@ -161,16 +161,13 @@ void SetupRC()
 //	 Nie obs³uguje map 8-bitowych.
 unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader)
 {
-	FILE *filePtr;							// wskaŸnik pozycji pliku
 	BITMAPFILEHEADER	bitmapFileHeader;		// nag³ówek pliku
-	unsigned char		*bitmapImage;			// dane obrazu
 	DWORD					imageIdx = 0;		// licznik pikseli
-	unsigned char		tempRGB;				// zmienna zamiany sk³adowych
 
-												// otwiera plik w trybie "read binary"
-	filePtr = fopen(filename, "rb");
-	if (filePtr == NULL)
-		return NULL;
+	// otwiera plik w trybie "read binary"
+	FILE* filePtr = fopen(filename, "rb"); // wskaznik pozycji pliku
+	if (filePtr == nullptr)
+		return nullptr;
 
 	// wczytuje nag³ówek pliku
 	fread(&bitmapFileHeader, sizeof(BITMAPFILEHEADER), 1, filePtr);
@@ -179,7 +176,7 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 	if (bitmapFileHeader.bfType != BITMAP_ID)
 	{
 		fclose(filePtr);
-		return NULL;
+		return nullptr;
 	}
 
 	// wczytuje nag³ówek obrazu
@@ -189,14 +186,14 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 	fseek(filePtr, bitmapFileHeader.bfOffBits, SEEK_SET);
 
 	// przydziela pamiêæ buforowi obrazu
-	bitmapImage = (unsigned char*)malloc(bitmapInfoHeader->biSizeImage);
+	auto* bitmapImage = static_cast<unsigned char*>(malloc(bitmapInfoHeader->biSizeImage));  // dane obrazu
 
 	// sprawdza, czy uda³o siê przydzieliæ pamiêæ
 	if (!bitmapImage)
 	{
 		free(bitmapImage);
 		fclose(filePtr);
-		return NULL;
+		return nullptr;
 	}
 
 	// wczytuje dane obrazu
@@ -212,7 +209,7 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 	// zamienia miejscami sk³adowe R i B 
 	for (imageIdx = 0; imageIdx < bitmapInfoHeader->biSizeImage; imageIdx += 3)
 	{
-		tempRGB = bitmapImage[imageIdx];
+		const unsigned char tempRGB = bitmapImage[imageIdx]; // zmienna zamiany skladowych
 		bitmapImage[imageIdx] = bitmapImage[imageIdx + 2];
 		bitmapImage[imageIdx + 2] = tempRGB;
 	}
@@ -224,7 +221,7 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 
 
 // Called to draw scene
-void RenderScene(void) {
+void RenderScene() {
 	//float normal[3];	// Storage for calculated surface normal
 
 	// Clear the window with current clearing color
@@ -271,10 +268,8 @@ void RenderScene(void) {
 
 
 // Select the pixel format for a given device context
-void SetDCPixelFormat(HDC hDC)
+void SetDCPixelFormat(const HDC hDC)
 {
-	int nPixelFormat;
-
 	static PIXELFORMATDESCRIPTOR pfd = {
 		sizeof(PIXELFORMATDESCRIPTOR),  // Size of this structure
 		1,                                                              // Version of this structure    
@@ -294,7 +289,7 @@ void SetDCPixelFormat(HDC hDC)
 		0,0,0 };                                // Not used to select mode
 
 												// Choose a pixel format that best matches that described in pfd
-	nPixelFormat = ChoosePixelFormat(hDC, &pfd);
+	const int nPixelFormat = ChoosePixelFormat(hDC, &pfd);
 
 	// Set the pixel format for the device context
 	SetPixelFormat(hDC, nPixelFormat, &pfd);
@@ -303,13 +298,12 @@ void SetDCPixelFormat(HDC hDC)
 
 
 // If necessary, creates a 3-3-2 palette for the device context listed.
-HPALETTE GetOpenGLPalette(HDC hDC)
+HPALETTE GetOpenGLPalette(const HDC hDC)
 {
-	HPALETTE hRetPal = NULL;	// Handle to palette to be created
+	HPALETTE hRetPal = nullptr;	// Handle to palette to be created
 	PIXELFORMATDESCRIPTOR pfd;	// Pixel Format Descriptor
 	LOGPALETTE *pPal;			// Pointer to memory for logical palette
 	int nPixelFormat;			// Pixel format index
-	int nColors;				// Number of entries in palette
 	int i;						// Counting variable
 	BYTE RedRange, GreenRange, BlueRange;
 	// Range for each color entry (7,7,and 3)
@@ -322,10 +316,10 @@ HPALETTE GetOpenGLPalette(HDC hDC)
 	// Does this pixel format require a palette?  If not, do not create a
 	// palette and just return NULL
 	if (!(pfd.dwFlags & PFD_NEED_PALETTE))
-		return NULL;
+		return nullptr;
 
 	// Number of entries in palette.  8 bits yeilds 256 entries
-	nColors = 1 << pfd.cColorBits;
+	const int nColors = 1 << pfd.cColorBits; // Number of entries in palette
 
 	// Allocate space for a logical palette structure plus all the palette entries
 	pPal = (LOGPALETTE*)malloc(sizeof(LOGPALETTE) + nColors * sizeof(PALETTEENTRY));
@@ -346,18 +340,15 @@ HPALETTE GetOpenGLPalette(HDC hDC)
 	{
 		// Fill in the 8-bit equivalents for each component
 		pPal->palPalEntry[i].peRed = (i >> pfd.cRedShift) & RedRange;
-		pPal->palPalEntry[i].peRed = (unsigned char)(
-			(double)pPal->palPalEntry[i].peRed * 255.0 / RedRange);
+		pPal->palPalEntry[i].peRed = static_cast<unsigned char>(static_cast<double>(pPal->palPalEntry[i].peRed) * 255.0 / RedRange);
 
 		pPal->palPalEntry[i].peGreen = (i >> pfd.cGreenShift) & GreenRange;
-		pPal->palPalEntry[i].peGreen = (unsigned char)(
-			(double)pPal->palPalEntry[i].peGreen * 255.0 / GreenRange);
+		pPal->palPalEntry[i].peGreen = static_cast<unsigned char>(static_cast<double>(pPal->palPalEntry[i].peGreen) * 255.0 / GreenRange);
 
 		pPal->palPalEntry[i].peBlue = (i >> pfd.cBlueShift) & BlueRange;
-		pPal->palPalEntry[i].peBlue = (unsigned char)(
-			(double)pPal->palPalEntry[i].peBlue * 255.0 / BlueRange);
+		pPal->palPalEntry[i].peBlue = static_cast<unsigned char>(static_cast<double>(pPal->palPalEntry[i].peBlue) * 255.0 / BlueRange);
 
-		pPal->palPalEntry[i].peFlags = (unsigned char)NULL;
+		pPal->palPalEntry[i].peFlags = static_cast<unsigned char>(NULL);
 	}
 
 
@@ -384,7 +375,6 @@ int APIENTRY WinMain(HINSTANCE       hInst,
 {
 	MSG                     msg;            // Windows message structure
 	WNDCLASS        wc;                     // Windows class structure
-	HWND            hWnd;           // Storeage for window handle
 
 	hInstance = hInst;
 
@@ -409,7 +399,7 @@ int APIENTRY WinMain(HINSTANCE       hInst,
 
 
 	// Create the main application window
-	hWnd = CreateWindow(
+	const HWND hWnd = CreateWindow( // Storeage for window handle
 		lpszAppName,
 		lpszAppName,
 
@@ -425,7 +415,7 @@ int APIENTRY WinMain(HINSTANCE       hInst,
 		NULL);
 
 	// If window was not created, quit
-	if (hWnd == NULL)
+	if (hWnd == nullptr)
 		return FALSE;
 
 
@@ -434,7 +424,7 @@ int APIENTRY WinMain(HINSTANCE       hInst,
 	UpdateWindow(hWnd);
 
 	// Process application messages until the application closes
-	while (GetMessage(&msg, NULL, 0, 0))
+	while (GetMessage(&msg, nullptr, 0, 0))
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
@@ -452,18 +442,18 @@ char wallTexture[] = "Bitmapy\\corrugated.bmp";
 
 // Window procedure, handles all messages for this program
 LRESULT CALLBACK WndProc(HWND    hWnd,
-	UINT    message,
-	WPARAM  wParam,
-	LPARAM  lParam)
+                         const UINT    message,
+	const WPARAM  wParam,
+	const LPARAM  lParam)
 {
-	static HGLRC hRC;               // Permenant Rendering context
-	static HDC hDC;                 // Private GDI Device context
-
+	static HDC hDC;  // Private GDI Device context
+	static HGLRC hRC;  // Permenant Rendering context
+	
 	switch (message)
 	{
 		// Window creation, setup for OpenGL
 	case WM_CREATE:
-		SetTimer(hWnd,101,100,NULL);
+		SetTimer(hWnd,101,100, nullptr);
 
 		// Store the device context
 		hDC = GetDC(hWnd);
@@ -546,11 +536,11 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 		KillTimer(hWnd,101);
 
 		// Deselect the current rendering context and delete it
-		wglMakeCurrent(hDC, NULL);
+		wglMakeCurrent(hDC, nullptr);
 		wglDeleteContext(hRC);
 
 		// Delete the palette if it was created
-		if (hPalette != NULL)
+		if (hPalette != nullptr)
 			DeleteObject(hPalette);
 
 		// Tell the application to terminate after the window
@@ -580,7 +570,7 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 			if (licznik == 60)
 				licznik = 0;
 
-			InvalidateRect(hWnd, NULL, FALSE);
+			InvalidateRect(hWnd, nullptr, FALSE);
 		}
 		break;
 
@@ -601,7 +591,7 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 		SwapBuffers(hDC);
 
 		// Validate the newly painted client area
-		ValidateRect(hWnd, NULL);
+		ValidateRect(hWnd, nullptr);
 	}
 	break;
 
@@ -612,18 +602,16 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 		// If the palette was created.
 		if (hPalette)
 		{
-			int nRet;
-
 			// Selects the palette into the current device context
 			SelectPalette(hDC, hPalette, FALSE);
 
 			// Map entries from the currently selected palette to
 			// the system palette.  The return value is the number 
 			// of palette entries modified.
-			nRet = RealizePalette(hDC);
+			const int nRet = RealizePalette(hDC);
 
 			// Repaint, forces remap of palette in current window
-			InvalidateRect(hWnd, NULL, FALSE);
+			InvalidateRect(hWnd, nullptr, FALSE);
 
 			return nRet;
 		}
@@ -635,7 +623,7 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 	case WM_PALETTECHANGED:
 		// Don't do anything if the palette does not exist, or if
 		// this is the window that changed the palette.
-		if ((hPalette != NULL) && ((HWND)wParam != hWnd))
+		if ((hPalette != nullptr) && ((HWND)wParam != hWnd))
 		{
 			// Select the palette into the device context
 			SelectPalette(hDC, hPalette, FALSE);
