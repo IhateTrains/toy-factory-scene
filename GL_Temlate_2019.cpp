@@ -21,10 +21,10 @@
 #   endif
 #endif
 
-#include "Template.h"
 #include "Objects.h"
 #include <Windows.h>            // Window defines
 #include <gl/GL.h>              // OpenGL
+#include <gl/GLU.h>
 #include <cstdio>
 
 #define glRGB(x, y, z)	glColor3ub((GLubyte)x, (GLubyte)y, (GLubyte)z)
@@ -69,10 +69,9 @@ void SetDCPixelFormat(HDC hDC);
 
 
 // Change viewing volume and viewport.  Called when window is resized
-void ChangeSize(GLsizei w, GLsizei h)
+void ChangeSize(const GLsizei w, GLsizei h)
 {
-	GLfloat nRange = 100.0f;
-	GLfloat fAspect;
+	const GLfloat nRange = 100.0f;
 	// Prevent a divide by zero
 	if (h == 0)
 		h = 1;
@@ -80,9 +79,9 @@ void ChangeSize(GLsizei w, GLsizei h)
 	lastWidth = w;
 	lastHeight = h;
 
-	fAspect = static_cast<GLfloat>(w) / static_cast<GLfloat>(h);
+	const GLfloat fAspect = static_cast<GLfloat>(w) / static_cast<GLfloat>(h);
 	// Set Viewport to window dimensions
-	glViewport(0, 0, w, h);
+	glViewport(0,0, w, h);
 
 	// Reset coordinate system
 	glMatrixMode(GL_PROJECTION);
@@ -95,9 +94,14 @@ void ChangeSize(GLsizei w, GLsizei h)
 		glOrtho(-nRange*w / h, nRange*w / h, -nRange, nRange, -nRange, nRange);
 
 	// Establish perspective: 
-	/*
-	gluPerspective(60.0f,fAspect,1.0,400);
-	*/
+	
+	//gluPerspective(60.0f,fAspect,1.0,400);
+	//gluPerspective( /* field of view in degree */ 60.0,
+	//	/* aspect ratio */ fAspect ,
+	//	/* Z near */ 10.0, /* Z far */ 400.0);
+	//gluPerspective(45, 1,1,10);
+	
+	
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -250,7 +254,7 @@ void RenderScene(void) {
 	//dwa_roboty();
 	//skrzynka();
 	//zabawka();
-	glTranslatef(0, -100, 0);
+	glTranslatef(0, -50, 0);
 	podloga();
 	sciany();
 	tasmociag();
@@ -660,8 +664,8 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 		if (wParam == VK_RIGHT)
 			yRot += 5.0f;
 
-		xRot = (const int)xRot % 360;
-		yRot = (const int)yRot % 360;
+		xRot = static_cast<const int>(xRot) % 360;
+		yRot = static_cast<const int>(yRot) % 360;
 
 		if (wParam == '1')
 			rot1 -= 5.0f;

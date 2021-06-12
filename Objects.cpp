@@ -38,7 +38,7 @@ void sciany() {
 	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
 	glBindTexture(GL_TEXTURE_2D, texture[2]);
 
-	double f = 1;
+	const double f = 1;
 	glBegin(GL_QUADS);
 
 	glNormal3d(0, 0, 1);
