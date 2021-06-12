@@ -712,17 +712,6 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 	break;
 	case WM_MOUSEWHEEL:
 		{
-		/*
-			cameraZoom = GET_WHEEL_DELTA_WPARAM(wParam);
-			GLdouble min_z = -100.0;
-			GLdouble max_z = 100.0;
-
-			if (cameraZoom < max_z) {
-				cameraZoom += 3.0;
-			}
-			else if (cameraZoom > min_z) {
-				cameraZoom -= 3.0;
-			}*/
 			float delta = 0.05;
 			if (GET_WHEEL_DELTA_WPARAM(wParam) > 0)
 				cameraZoom += delta;
@@ -730,6 +719,12 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 				cameraZoom -= delta;
 
 			ChangeSize(lastWidth, lastHeight);
+		}
+		break;
+
+	case WM_LBUTTONDOWN:
+		{
+			pokazDach = !pokazDach;
 		}
 		break;
 

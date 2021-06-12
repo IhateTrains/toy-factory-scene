@@ -86,21 +86,48 @@ void sciany() {
 }
 
 void dach() {
+	glDisable(GL_CULL_FACE);
+	glPolygonMode(GL_BACK, GL_FILL);
+
 	glColor3d(1, 1, 1);
 	const double k = 3;
-	const double f = 30;
+	const double f = 5;
 
-	// podloga fabryki
 	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
 	glBindTexture(GL_TEXTURE_2D, texture[3]);
 	glBegin(GL_QUADS);
-	glNormal3d(0, 1, 0);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, -k * rozmiar_fabryki);
-	glTexCoord2d(0.0, f); glVertex3d(-k * rozmiar_fabryki, 300, k * rozmiar_fabryki);
-	glTexCoord2d(f, f); glVertex3d(0, 500, k * rozmiar_fabryki);
+
+	// lewa strona dachu
+	float vl[3][3] = {
+		{ -k * rozmiar_fabryki, 300, -k * rozmiar_fabryki },
+		{ -k * rozmiar_fabryki, 300, k * rozmiar_fabryki },
+		{ 0, 500, k * rozmiar_fabryki }
+	};
+	float norm[3];
+	calcNormal(vl, norm);
+	glNormal3f(norm[0], norm[1], norm[2]);
+	glTexCoord2d(f, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, -k * rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, k * rozmiar_fabryki);
+	glTexCoord2d(0.0, f); glVertex3d(0, 500, k * rozmiar_fabryki);
+	glTexCoord2d(f, f); glVertex3d(0, 500, -k * rozmiar_fabryki);
+
+	// prawa strona dachu
+	float vr[3][3] = {
+		{ 0, 500, -k * rozmiar_fabryki },
+		{ 0, 500, k * rozmiar_fabryki },
+		{ k * rozmiar_fabryki, 300, k * rozmiar_fabryki }
+	};
+	calcNormal(vr, norm);
+	glNormal3f(norm[0], norm[1], norm[2]);
 	glTexCoord2d(f, 0.0); glVertex3d(0, 500, -k * rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(0, 500, k * rozmiar_fabryki);
+	glTexCoord2d(0.0, f);  glVertex3d(k * rozmiar_fabryki, 300, k * rozmiar_fabryki);
+	glTexCoord2d(f, f); glVertex3d(k * rozmiar_fabryki, 300, -k * rozmiar_fabryki);
 	glEnd();
 	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
+
+	glEnable(GL_CULL_FACE);
+	glPolygonMode(GL_BACK, GL_LINE);
 }
 
 
