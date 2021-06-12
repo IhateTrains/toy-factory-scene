@@ -36,6 +36,7 @@ unsigned int licznik;
 double rot1, rot2, rot3;
 int tasmociagStartPos = 0;
 float cameraZoom =1;
+bool pokazDach = true;
 
 
 
@@ -248,6 +249,10 @@ void RenderScene() {
 	glTranslatef(0, -50, 0);
 	podloga();
 	sciany();
+	if (pokazDach) {
+		dach();
+	}
+	
 	tasmociag();
 	glTranslatef(0, 50, -40);
 	dwa_roboty();
@@ -434,7 +439,7 @@ char floorTexture[] = "Bitmapy\\floor_small.bmp";
 char crateTexture[] = "Bitmapy\\crate.bmp";
 char wallTexture[] = "Bitmapy\\corrugated.bmp";
 char roofTexture[] = "Bitmapy\\metal_roofing.bmp";
-char grassTexture[] = "Bitmapy\\GRASS.BMP";
+char grassTexture[] = "Bitmapy\\seamless_grass.bmp";
 
 
 // Window procedure, handles all messages for this program
