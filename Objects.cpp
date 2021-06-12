@@ -10,14 +10,15 @@
 constexpr auto GL_PI = 3.14;
 
 void podloga() {
-	glColor3d(1, 1, 1);
+	glColor3d(0.5, 0.5, 0.5);
 	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
 
+	glPushMatrix();
 	glBegin(GL_QUADS);
 
 	glNormal3d(0, 1, 0);
-	const int k = 3;
+	const double k = 3;
 	const double f = 50;
 	glTexCoord2d(0.0, 0.0); glVertex3d(-k * 128, 0, -k * 128);
 	glTexCoord2d(0.0, f); glVertex3d(-k * 128, 0, k * 128);
@@ -25,6 +26,7 @@ void podloga() {
 	glTexCoord2d(f, 0.0); glVertex3d(k * 128, 0, -k * 128);
 
 	glEnd();
+	glPopMatrix();
 
 	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
 }
@@ -38,17 +40,33 @@ void sciany() {
 	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
 	glBindTexture(GL_TEXTURE_2D, texture[2]);
 
-	const double f = 1;
+	const double k = 3;
+	const double f = 50;
 	glBegin(GL_QUADS);
-
+	// sciana tylna
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-640, 300, -320);
-	glTexCoord2d(0.0, f); glVertex3d(-640, 0, -320);
-	glTexCoord2d(f, f); glVertex3d(640, 0, -320);
-	glTexCoord2d(f, 0.0); glVertex3d(640, 300, -320);
-
-
-
+	glTexCoord2d(0.0, 0.0); glVertex3d(-k * 128, 300, -k * 128);
+	glTexCoord2d(0.0, f); glVertex3d(-k * 128, 0, -k * 128);
+	glTexCoord2d(f, f); glVertex3d(k * 128, 0, -k * 128);
+	glTexCoord2d(f, 0.0); glVertex3d(k * 128, 300, -k * 128);
+	// sciana przednia
+	glNormal3f(0, 0, -1);
+	glTexCoord2d(0.0, 0.0); glVertex3d(k * 128, 300, k * 128);
+	glTexCoord2d(0.0, f); glVertex3d(k * 128, 0, k * 128);
+	glTexCoord2d(f, f); glVertex3d(-k * 128, 0, k * 128);
+	glTexCoord2d(f, 0.0); glVertex3d(-k * 128, 300, k * 128);
+	// sciana lewa
+	glNormal3f(0, 0, 1);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-k * 128, 300, k * 128);
+	glTexCoord2d(0.0, f); glVertex3d(-k * 128, 0, k * 128);
+	glTexCoord2d(f, f); glVertex3d(-k * 128, 0, -k * 128);
+	glTexCoord2d(f, 0.0); glVertex3d(-k * 128, 300, -k * 128);
+	// sciana prawa
+	glNormal3f(0, 0, 1);
+	glTexCoord2d(0.0, 0.0); glVertex3d(k * 128, 300, -k * 128);
+	glTexCoord2d(0.0, f); glVertex3d(k * 128, 0, -k * 128);
+	glTexCoord2d(f, f); glVertex3d(k * 128, 0, k * 128);
+	glTexCoord2d(f, 0.0); glVertex3d(k * 128, 300, k * 128);
 
 	glEnd();
 
@@ -179,33 +197,35 @@ void szescian() {
 
 void prostopadloscian(const double dlugosc, const double wysokosc, const double szerokosc) {
 	glBegin(GL_QUADS);
+	// sciana przednia
 	glNormal3d(0, 0, 1);
 	glVertex3d(dlugosc, 0, szerokosc);
 	glVertex3d(dlugosc, wysokosc, szerokosc);
 	glVertex3d(0, wysokosc, szerokosc);
 	glVertex3d(0, 0, szerokosc);
-
+	// sciana tylna
 	glNormal3d(0, 0, -1);
 	glVertex3d(0, 0, 0);
 	glVertex3d(0, wysokosc, 0);
 	glVertex3d(dlugosc, wysokosc, 0);
 	glVertex3d(dlugosc, 0, 0);
 	glEnd();
-	glBegin(GL_QUAD_STRIP);
+	glBegin(GL_QUAD_STRIP); // TODO: zamieniæ na GL_QUADS
+	// sciana prawa
 	glNormal3d(1, 0, 0);
 	glVertex3d(dlugosc, wysokosc, 0);
 	glVertex3d(dlugosc, wysokosc, szerokosc);
 	glVertex3d(dlugosc, 0, 0);
 	glVertex3d(dlugosc, 0, szerokosc);
-
+	// podstawa dolna
 	glNormal3d(0, -1, 0);
 	glVertex3d(0, 0, 0);
 	glVertex3d(0, 0, szerokosc);
-
+	// sciana lewa
 	glNormal3d(-1, 0, 0);
 	glVertex3d(0, wysokosc, 0);
 	glVertex3d(0, wysokosc, szerokosc);
-
+	// podstawa gorna
 	glNormal3d(0, 1, 0);
 	glVertex3d(dlugosc, wysokosc, 0);
 	glVertex3d(dlugosc, wysokosc, szerokosc);
@@ -358,7 +378,7 @@ void ramie(const double r1, const double r2, const double h, const double d) {
 	glEnd();
 }
 
-void zabawka() {
+void zabawka(const bool glowa = true, const bool rece = true) {
 	glColor3d(0.1, 0.3, 0.5);
 	const double dlugoscNogi = 25;
 
@@ -369,8 +389,8 @@ void zabawka() {
 	const double wysokoscGlowy = 20;
 	const double szerokoscGlowy = szerokoscKorpusu - 10;
 
-	glPushMatrix();
 	// noga robota
+	glPushMatrix();
 	glTranslated(1, 0, 0);
 	prostopadloscian(8, dlugoscNogi, 10);
 	glPopMatrix();
@@ -387,46 +407,52 @@ void zabawka() {
 	prostopadloscian(gruboscKorpusu, wysokoscKorpusu, szerokoscKorpusu);
 	glPopMatrix();
 
-	// glowa robota
-	glPushMatrix();
-	glTranslated(0, dlugoscNogi + wysokoscKorpusu, 0);
-	prostopadloscian(gruboscKorpusu, wysokoscGlowy, szerokoscGlowy);
-	// lewe oko
-	glPushMatrix();
-	glColor3d(1, 0, 0);
-	glTranslated(gruboscKorpusu, wysokoscGlowy - 8, 6);
-	glRotated(90, 0, 1, 0);
-	walec(1, 3);
-	glPopMatrix();
-	// prawe oko
-	glPushMatrix();
-	glColor3d(1, 0, 0);
-	glTranslated(gruboscKorpusu, wysokoscGlowy - 8, szerokoscGlowy - 6);
-	glRotated(90, 0, 1, 0);
-	walec(1, 3);
-	glPopMatrix();
-	glPopMatrix();
+	if (glowa) {
+		// glowa robota
+		glPushMatrix();
 
-	glColor3d(0.1, 0.3, 0.5);
-	// lewe ramie robota
-	glPushMatrix();
-	glTranslated(5, dlugoscNogi + wysokoscKorpusu - 10, -10);
-	glRotated(rot2, 0, 0, 1);
-	ramie(5, 5, 5, 8);
-	glTranslated(12, 0, 0);
-	glRotated(rot3, 0, 0, 1);
-	ramie(5, 5, 5, 8);
-	glPopMatrix();
+		glTranslated(0, dlugoscNogi + wysokoscKorpusu, 0);
+		prostopadloscian(gruboscKorpusu, wysokoscGlowy, szerokoscGlowy);
+		// lewe oko
+		glPushMatrix();
+		glColor3d(1, 0, 0);
+		glTranslated(gruboscKorpusu, wysokoscGlowy - 8, 6);
+		glRotated(90, 0, 1, 0);
+		walec(1, 3);
+		glPopMatrix();
+		// prawe oko
+		glPushMatrix();
+		glColor3d(1, 0, 0);
+		glTranslated(gruboscKorpusu, wysokoscGlowy - 8, szerokoscGlowy - 6);
+		glRotated(90, 0, 1, 0);
+		walec(1, 3);
+		glPopMatrix();
 
-	// prawe ramie robota
-	glPushMatrix();
-	glTranslated(5, dlugoscNogi + wysokoscKorpusu - 10, -5 + szerokoscKorpusu);
-	glRotated(rot2, 0, 0, 1);
-	ramie(5, 5, 5, 8);
-	glTranslated(12, 0, 0);
-	glRotated(rot3, 0, 0, 1);
-	ramie(5, 5, 5, 8);
-	glPopMatrix();
+		glPopMatrix();
+	}
+
+	if (rece) {
+		glColor3d(0.1, 0.3, 0.5);
+		// lewe ramie robota
+		glPushMatrix();
+		glTranslated(5, dlugoscNogi + wysokoscKorpusu - 10, -10);
+		glRotated(rot2, 0, 0, 1);
+		ramie(5, 5, 5, 8);
+		glTranslated(12, 0, 0);
+		glRotated(rot3, 0, 0, 1);
+		ramie(5, 5, 5, 8);
+		glPopMatrix();
+
+		// prawe ramie robota
+		glPushMatrix();
+		glTranslated(5, dlugoscNogi + wysokoscKorpusu - 10, -5 + szerokoscKorpusu);
+		glRotated(rot2, 0, 0, 1);
+		ramie(5, 5, 5, 8);
+		glTranslated(12, 0, 0);
+		glRotated(rot3, 0, 0, 1);
+		ramie(5, 5, 5, 8);
+		glPopMatrix();
+	}
 }
 
 void tasmociag() {
@@ -444,10 +470,10 @@ void tasmociag() {
 		else {
 			glColor3d(0.2, 0.2, 0.2);
 		}
-		glVertex3d(-1000 + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, 50);
-		glVertex3d(-1000 + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, 0);
-		glVertex3d(-1000 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 0);
-		glVertex3d(-1000 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 50);
+		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, 50);
+		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, 0);
+		glVertex3d(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 0);
+		glVertex3d(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 50);
 	}
 	glEnd();
 
@@ -472,8 +498,13 @@ void tasmociag() {
 	// zabawki
 	for (int i = 0; i < 40; i += 2) {
 		glPushMatrix();
-		glTranslated(-1000 + static_cast<double>(i) * 30 + tasmociagStartPos, 36, 10);
-		zabawka();
+		glTranslated(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 36, 10);
+		if (i > 10) {
+			zabawka(true, true);
+		}
+		else {
+			zabawka(false, false);
+		}
 		glPopMatrix();
 	}
 
@@ -511,6 +542,7 @@ void robot(const double d1, const double d2, const double d3) {
 	glTranslated(30, 0, -5);
 	glRotated(d3, 0, 0, 1);
 	ramie(15, 10, 5, 30);
+
 	glPopMatrix();
 }
 

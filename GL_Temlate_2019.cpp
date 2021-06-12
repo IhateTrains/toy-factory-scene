@@ -30,11 +30,13 @@
 #define glRGB(x, y, z)	glColor3ub((GLubyte)x, (GLubyte)y, (GLubyte)z)
 #define BITMAP_ID 0x4D42		// identyfikator formatu BMP
 
-unsigned int		texture[3];			// obiekt tekstury
+unsigned int		texture[5];			// obiekt tekstury
 
 unsigned int licznik;
 double rot1, rot2, rot3;
 int tasmociagStartPos = 0;
+float cameraZoom =1;
+
 
 
 // Color Palette handle
@@ -71,13 +73,10 @@ void SetDCPixelFormat(HDC hDC);
 // Change viewing volume and viewport.  Called when window is resized
 void ChangeSize(const GLsizei w, GLsizei h)
 {
-	const GLfloat nRange = 100.0f;
+	const GLfloat nRange = 100.0f * cameraZoom;
 	// Prevent a divide by zero
 	if (h == 0)
 		h = 1;
-
-	lastWidth = w;
-	lastHeight = h;
 
 	const GLfloat fAspect = static_cast<GLfloat>(w) / static_cast<GLfloat>(h);
 	// Set Viewport to window dimensions
@@ -151,7 +150,7 @@ void SetupRC()
 	// White background
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	// Black brush
-	glColor3f(0.0, 0.0, 0.0);
+	glColor3d(0.0, 0.0, 0.0);
 }
 
 
@@ -255,6 +254,8 @@ void RenderScene() {
 	podloga();
 	sciany();
 	tasmociag();
+	glTranslatef(0, 50, -40);
+	dwa_roboty();
 	
 	/////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////
@@ -437,6 +438,8 @@ int APIENTRY WinMain(HINSTANCE       hInst,
 char floorTexture[] = "Bitmapy\\floor_small.bmp";
 char crateTexture[] = "Bitmapy\\crate.bmp";
 char wallTexture[] = "Bitmapy\\corrugated.bmp";
+char roofTexture[] = "Bitmapy\\metal_roofing.bmp";
+char grassTexture[] = "Bitmapy\\GRASS.bmp";
 
 
 // Window procedure, handles all messages for this program
@@ -525,6 +528,42 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 			free(bitmapData);
 
 
+		// ³aduje czwarty obraz tekstury:
+		bitmapData = LoadBitmapFile(roofTexture, &bitmapInfoHeader);
+		glBindTexture(GL_TEXTURE_2D, texture[3]);       // aktywuje obiekt tekstury
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		// tworzy obraz tekstury
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth,
+			bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData);
+
+		if (bitmapData)
+			free(bitmapData);
+
+
+		// ³aduje czwarty obraz tekstury:
+		bitmapData = LoadBitmapFile(grassTexture, &bitmapInfoHeader);
+		glBindTexture(GL_TEXTURE_2D, texture[4]);       // aktywuje obiekt tekstury
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+		// tworzy obraz tekstury
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, bitmapInfoHeader.biWidth,
+			bitmapInfoHeader.biHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, bitmapData);
+
+		if (bitmapData)
+			free(bitmapData);
+
+
 
 		// ustalenie sposobu mieszania tekstury z t³em
 		glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
@@ -576,7 +615,9 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 	case WM_SIZE:
 		// Call our function which modifies the clipping
 		// volume and viewport
-		ChangeSize(LOWORD(lParam), HIWORD(lParam));
+		lastWidth = LOWORD(lParam);
+		lastHeight = HIWORD(lParam);
+		ChangeSize(lastWidth, lastHeight);
 		break;
 
 
@@ -670,6 +711,28 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 		InvalidateRect(hWnd, nullptr, FALSE);
 	}
 	break;
+	case WM_MOUSEWHEEL:
+		{
+		/*
+			cameraZoom = GET_WHEEL_DELTA_WPARAM(wParam);
+			GLdouble min_z = -100.0;
+			GLdouble max_z = 100.0;
+
+			if (cameraZoom < max_z) {
+				cameraZoom += 3.0;
+			}
+			else if (cameraZoom > min_z) {
+				cameraZoom -= 3.0;
+			}*/
+			float delta = 0.05;
+			if (GET_WHEEL_DELTA_WPARAM(wParam) > 0)
+				cameraZoom += delta;
+			else
+				cameraZoom -= delta;
+
+			ChangeSize(lastWidth, lastHeight);
+		}
+		break;
 
 	default:   // Passes it on if unproccessed
 		return DefWindowProc(hWnd, message, wParam, lParam);

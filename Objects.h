@@ -31,7 +31,7 @@ void walec(double h, double r);
 void ramie(double r1, double r2, double h, double d);
 
 
-void zabawka();
+void zabawka(const bool glowa, const bool rece);
 
 
 void tasmociag();
