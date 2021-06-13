@@ -33,10 +33,15 @@
 unsigned int texture[5];			// obiekt tekstury
 
 unsigned int licznik;
-double rot1, rot2, rot3;
 int tasmociagStartPos = 0;
 float cameraZoom =1;
 bool pokazDach = true;
+
+
+// dla robota PUMA
+double rot1, rot2, rot3;
+// dla zabawek
+double rotA = -75, rotB = 15;
 
 
 

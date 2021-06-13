@@ -516,20 +516,20 @@ void zabawka(const bool glowa = true, const bool rece = true) {
 		// lewe ramie robota
 		glPushMatrix();
 		glTranslated(5, dlugoscNogi + wysokoscKorpusu - 10, -10);
-		glRotated(rot2, 0, 0, 1);
+		glRotated(rotA, 0, 0, 1);
 		ramie(5, 5, 5, 8);
 		glTranslated(12, 0, 0);
-		glRotated(rot3, 0, 0, 1);
+		glRotated(rotB, 0, 0, 1);
 		ramie(5, 5, 5, 8);
 		glPopMatrix();
 
 		// prawe ramie robota
 		glPushMatrix();
 		glTranslated(5, dlugoscNogi + wysokoscKorpusu - 10, -5 + szerokoscKorpusu);
-		glRotated(rot2, 0, 0, 1);
+		glRotated(rotA, 0, 0, 1);
 		ramie(5, 5, 5, 8);
 		glTranslated(12, 0, 0);
-		glRotated(rot3, 0, 0, 1);
+		glRotated(rotB, 0, 0, 1);
 		ramie(5, 5, 5, 8);
 		glPopMatrix();
 	}

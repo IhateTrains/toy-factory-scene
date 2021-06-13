@@ -3,6 +3,7 @@
 extern unsigned int texture[5];
 extern int tasmociagStartPos;
 extern double rot1, rot2, rot3;
+extern double rotA, rotB;
 
 
 void podloga();
