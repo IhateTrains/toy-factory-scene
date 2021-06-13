@@ -37,6 +37,8 @@ int tasmociagStartPos = 0;
 float cameraZoom =1;
 bool pokazDach = true;
 
+bool receDodane = false;
+
 
 // dla robota PUMA
 double rot1, rot2, rot3;
@@ -49,7 +51,7 @@ double rotA = -75, rotB = 15;
 HPALETTE hPalette = nullptr;
 
 // Application name and instance storeage
-static LPCTSTR lpszAppName = "Toy Factory";
+static LPCTSTR lpszAppName = "Robot Factory";
 static HINSTANCE hInstance;
 
 // Rotation amounts
@@ -244,25 +246,21 @@ void RenderScene() {
 	//Wyrysowanie prostokata:
 	//glRectd(-10.0, -10.0, 20.0, 20.0);
 	
-	//szescian();
 	//walec(50, 20);
-	//ramie(30, 10, 10, 35);
-	//robot(rot1, rot2, rot3);
 	//dwa_roboty();
-	//skrzynka();
-	//zabawka();
-	glTranslatef(0, -50, 0);
+	glTranslated(0, -50, 0);
 	podloga();
 	sciany();
 	if (pokazDach) {
 		dach();
 	}
 	
-	tasmociag();
-	glTranslatef(0, 50, -40);
+	tasmociag(receDodane);
+	glTranslated(70, 50, -60);
 	//dwa_roboty();
 	//ur16e();
-	//robot(rot1, rot2, rot3);
+	robot(rot1, rot2, rot3);
+	glTranslated(0, -25, -60);
 	skrzynka();
 
 
@@ -465,7 +463,7 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 	{
 		// Window creation, setup for OpenGL
 	case WM_CREATE:
-		SetTimer(hWnd,101,100, nullptr);
+		SetTimer(hWnd,101,50, nullptr);
 
 		// Store the device context
 		hDC = GetDC(hWnd);
@@ -612,13 +610,25 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 
 
 			if (licznik < 60) {
-				tasmociagStartPos = licznik % 60;
+				++tasmociagStartPos;
 			}
 			else if (licznik == 60) {
-				tasmociagStartPos = 0;
+				receDodane = false;
 			}
-			else if (licznik < 120) {
-				licznik = 0;
+			else if (licznik < 79) {
+				rot1 -= 10;
+			}
+			else if (licznik < 79 + 18) {
+				receDodane = true;
+				rot1 += 10;
+				++tasmociagStartPos;
+			}
+			else {
+				tasmociagStartPos = (++tasmociagStartPos) % 60;
+				//if (tasmociagStartPos == 0) {
+				//	receDodane = false;
+					licznik = tasmociagStartPos;
+				//}
 			}
 
 

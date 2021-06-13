@@ -32,7 +32,7 @@ void ramie(double r1, double r2, double h, double d);
 void zabawka(const bool glowa, const bool rece);
 
 
-void tasmociag();
+void tasmociag(const bool receDodane);
 
 
 void robot(double d1, double d2, double d3);

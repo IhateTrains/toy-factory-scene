@@ -535,7 +535,7 @@ void zabawka(const bool glowa = true, const bool rece = true) {
 	}
 }
 
-void tasmociag() {
+void tasmociag(const bool receDodane = false) {
 	double szerokoscTasmociagu = 50;
 
 	glDisable(GL_CULL_FACE);
@@ -581,11 +581,17 @@ void tasmociag() {
 	for (int i = 0; i < 40; i += 2) {
 		glPushMatrix();
 		glTranslated(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 36, 12.5);
-		if (i > 10) {
-			zabawka(true, true);
+		if (i < 10) {
+			zabawka(false, false);
+		}
+		else if (i < 18) {
+			zabawka(true, false);
+		}
+		else if (i == 18) {
+			zabawka(true, receDodane);
 		}
 		else {
-			zabawka(false, false);
+			zabawka(true, true);
 		}
 		glPopMatrix();
 	}
