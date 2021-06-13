@@ -34,14 +34,14 @@ unsigned int texture[5];			// obiekt tekstury
 
 unsigned int licznik;
 int tasmociagStartPos = 0;
-float cameraZoom =1;
+double cameraZoom = 1;
 bool pokazDach = true;
 
-bool receDodane = false;
+bool robotZReka = false;
 
 
 // dla robota PUMA
-double rot1, rot2, rot3;
+double rot1, rot2 = -30, rot3 = 0;
 // dla zabawek
 double rotA = -75, rotB = 15;
 
@@ -255,12 +255,12 @@ void RenderScene() {
 		dach();
 	}
 	
-	tasmociag(receDodane);
-	glTranslated(70, 50, -60);
+	tasmociag();
+	glTranslated(70, 50, -65);
 	//dwa_roboty();
 	//ur16e();
-	robot(rot1, rot2, rot3);
-	glTranslated(0, -25, -60);
+	robot(rot1, rot2, rot3, robotZReka);
+	glTranslated(25, -25, -55);
 	skrzynka();
 
 
@@ -597,41 +597,27 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 	case WM_TIMER:
 		if (wParam == 101) {
 			++licznik;
-			/*
-			if (licznik < 15) {
-				rot1 -= 10;
-				rot2 += 15.0;
-			}
-			else if (licznik > 15 && licznik < 30) {
-				rot1 += 10;
-				rot2 -= 15.0;
-			}
-			*/
 
-
-			if (licznik < 60) {
-				++tasmociagStartPos;
-			}
-			else if (licznik == 60) {
-				receDodane = false;
+			if (licznik <= 60) {
+				tasmociagStartPos = licznik;
 			}
 			else if (licznik < 79) {
 				rot1 -= 10;
+				rot2 += 1;
+				//rot3 += 1;
 			}
-			else if (licznik < 79 + 18) {
-				receDodane = true;
+			else if (licznik < 79 + 1) {
+				tasmociagStartPos = 0;
+			}
+			else if (licznik < 79 + 19) {
 				rot1 += 10;
-				++tasmociagStartPos;
+				rot2 -= 1;
+				//rot3 -= 1;
 			}
 			else {
-				tasmociagStartPos = (++tasmociagStartPos) % 60;
-				//if (tasmociagStartPos == 0) {
-				//	receDodane = false;
-					licznik = tasmociagStartPos;
-				//}
+				licznik = 0;
+				tasmociagStartPos = licznik;
 			}
-
-
 
 			InvalidateRect(hWnd, nullptr, FALSE);
 		}

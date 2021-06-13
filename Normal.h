@@ -5,10 +5,10 @@
 
 // Reduces a normal vector specified as a set of three coordinates,
 // to a unit normal vector of length one.
-inline void ReduceToUnit(float vector[3])
+inline void ReduceToUnit(double vector[3])
 {
 	// Calculate the length of the vector		
-	float length = sqrt(
+	double length = sqrt(
 		vector[0] * vector[0] +
 		vector[1] * vector[1] +
 		vector[2] * vector[2]
@@ -28,9 +28,9 @@ inline void ReduceToUnit(float vector[3])
 
 
 // Points p1, p2, & p3 specified in counter clock-wise order
-inline void calcNormal(float v[3][3], float out[3])
+inline void calcNormal(double v[3][3], double out[3])
 {
-	float v1[3], v2[3];
+	double v1[3], v2[3];
 	static const int x = 0;
 	static const int y = 1;
 	static const int z = 2;
