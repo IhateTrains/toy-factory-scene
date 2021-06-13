@@ -32,10 +32,10 @@ void podloga() {
 	glBindTexture(GL_TEXTURE_2D, texture[4]);
 	glBegin(GL_QUADS);
 	glNormal3d(0, 1, 0);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-k * 256, -1, -k * 256);
-	glTexCoord2d(0.0, f); glVertex3d(-k * 256, -1, k * 256);
-	glTexCoord2d(f, f); glVertex3d(k * 256, -1, k * 256);
-	glTexCoord2d(f, 0.0); glVertex3d(k * 256, -1, -k * 256);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-k * 1024, -1, -k * 1024);
+	glTexCoord2d(0.0, f); glVertex3d(-k * 1024, -1, k * 1024);
+	glTexCoord2d(f, f); glVertex3d(k * 1024, -1, k * 1024);
+	glTexCoord2d(f, 0.0); glVertex3d(k * 1024, -1, -k * 1024);
 	glEnd();
 	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
 }
@@ -63,16 +63,37 @@ void sciany() {
 	glTexCoord2d(0.0, f); glVertex3d(k * rozmiar_fabryki, 0, k * rozmiar_fabryki);
 	glTexCoord2d(f, f); glVertex3d(-k * rozmiar_fabryki, 0, k * rozmiar_fabryki);
 	glTexCoord2d(f, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, k * rozmiar_fabryki);
-	// sciana lewa
+	// sciana lewa z otworem
 	glNormal3f(0, 0, 1);
 	glTexCoord2d(0.0, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, k * rozmiar_fabryki);
 	glTexCoord2d(0.0, f); glVertex3d(-k * rozmiar_fabryki, 0, k * rozmiar_fabryki);
+	glTexCoord2d(f, f); glVertex3d(-k * rozmiar_fabryki, 0, 50);
+	glTexCoord2d(f, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, 50);
+	glNormal3f(0, 0, 1);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, 50);
+	glTexCoord2d(0.0, f); glVertex3d(-k * rozmiar_fabryki, 120, 50);
+	glTexCoord2d(f, f); glVertex3d(-k * rozmiar_fabryki, 120, 0);
+	glTexCoord2d(f, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, 0);
+	glNormal3f(0, 0, 1);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, 0);
+	glTexCoord2d(0.0, f); glVertex3d(-k * rozmiar_fabryki, 0, 0);
 	glTexCoord2d(f, f); glVertex3d(-k * rozmiar_fabryki, 0, -k * rozmiar_fabryki);
 	glTexCoord2d(f, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, -k * rozmiar_fabryki);
-	// sciana prawa
+	
+	// sciana prawa z otworem
 	glNormal3f(0, 0, 1);
 	glTexCoord2d(0.0, 0.0); glVertex3d(k * rozmiar_fabryki, 300, -k * rozmiar_fabryki);
 	glTexCoord2d(0.0, f); glVertex3d(k * rozmiar_fabryki, 0, -k * rozmiar_fabryki);
+	glTexCoord2d(f, f); glVertex3d(k * rozmiar_fabryki, 0, 0);
+	glTexCoord2d(f, 0.0); glVertex3d(k * rozmiar_fabryki, 300, 0);
+	glNormal3f(0, 0, 1);
+	glTexCoord2d(0.0, 0.0); glVertex3d(k * rozmiar_fabryki, 300, 0);
+	glTexCoord2d(0.0, f); glVertex3d(k * rozmiar_fabryki, 120, 0);
+	glTexCoord2d(f, f); glVertex3d(k * rozmiar_fabryki, 120, 50);
+	glTexCoord2d(f, 0.0); glVertex3d(k * rozmiar_fabryki, 300, 50);
+	glNormal3f(0, 0, 1);
+	glTexCoord2d(0.0, 0.0); glVertex3d(k * rozmiar_fabryki, 300, 50);
+	glTexCoord2d(0.0, f); glVertex3d(k * rozmiar_fabryki, 0, 50);
 	glTexCoord2d(f, f); glVertex3d(k * rozmiar_fabryki, 0, k * rozmiar_fabryki);
 	glTexCoord2d(f, 0.0); glVertex3d(k * rozmiar_fabryki, 300, k * rozmiar_fabryki);
 
@@ -515,6 +536,8 @@ void zabawka(const bool glowa = true, const bool rece = true) {
 }
 
 void tasmociag() {
+	double szerokoscTasmociagu = 50;
+
 	glDisable(GL_CULL_FACE);
 	glPolygonMode(GL_BACK, GL_FILL);
 
@@ -529,10 +552,10 @@ void tasmociag() {
 		else {
 			glColor3d(0.2, 0.2, 0.2);
 		}
-		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, 50);
+		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, szerokoscTasmociagu);
 		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, 0);
 		glVertex3d(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 0);
-		glVertex3d(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 50);
+		glVertex3d(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, szerokoscTasmociagu);
 	}
 	glEnd();
 
@@ -547,17 +570,17 @@ void tasmociag() {
 		else {
 			glColor3d(0.2, 0.2, 0.2);
 		}
-		glVertex3d(-500 + static_cast<double>(i) * 30 - tasmociagStartPos, 5, 50);
+		glVertex3d(-500 + static_cast<double>(i) * 30 - tasmociagStartPos, 5, szerokoscTasmociagu);
 		glVertex3d(-500 + static_cast<double>(i) * 30 - tasmociagStartPos, 5, 0);
 		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 - tasmociagStartPos, 5, 0);
-		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 - tasmociagStartPos, 5, 50);
+		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 - tasmociagStartPos, 5, szerokoscTasmociagu);
 	}
 	glEnd();
 
 	// zabawki
 	for (int i = 0; i < 40; i += 2) {
 		glPushMatrix();
-		glTranslated(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 36, 10);
+		glTranslated(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 36, 12.5);
 		if (i > 10) {
 			zabawka(true, true);
 		}

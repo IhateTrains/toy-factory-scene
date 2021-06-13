@@ -605,12 +605,18 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 			}
 			*/
 
-			// tasmociag
-			tasmociagStartPos = licznik % 60;
 
-
-			if (licznik == 60)
+			if (licznik < 60) {
+				tasmociagStartPos = licznik % 60;
+			}
+			else if (licznik == 60) {
+				tasmociagStartPos = 0;
+			}
+			else if (licznik < 120) {
 				licznik = 0;
+			}
+
+
 
 			InvalidateRect(hWnd, nullptr, FALSE);
 		}
@@ -717,11 +723,11 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 	break;
 	case WM_MOUSEWHEEL:
 		{
-			float delta = 0.05;
+			float delta = 0.1;
 			if (GET_WHEEL_DELTA_WPARAM(wParam) > 0)
-				cameraZoom += delta;
-			else
 				cameraZoom -= delta;
+			else
+				cameraZoom += delta;
 
 			ChangeSize(lastWidth, lastHeight);
 		}
