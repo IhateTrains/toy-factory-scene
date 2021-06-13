@@ -602,17 +602,17 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 				tasmociagStartPos = licznik;
 			}
 			else if (licznik < 79) {
+				robotZReka = true;
 				rot1 -= 10;
-				rot2 += 1;
-				//rot3 += 1;
+				rot2 += 1.5;
 			}
 			else if (licznik < 79 + 1) {
 				tasmociagStartPos = 0;
+				robotZReka = false;
 			}
-			else if (licznik < 79 + 19) {
+			else if (licznik < 79 + 1 + 18) {
 				rot1 += 10;
-				rot2 -= 1;
-				//rot3 -= 1;
+				rot2 -= 1.5;
 			}
 			else {
 				licznik = 0;

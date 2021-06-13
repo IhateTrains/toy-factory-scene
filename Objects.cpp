@@ -458,6 +458,13 @@ void ramie(const double r1, const double r2, const double h, const double d) {
 	glEnd();
 }
 
+void ramieZabawki() {
+	ramie(5, 5, 5, 8);
+	glTranslated(12, 0, 0);
+	glRotated(rotB, 0, 0, 1);
+	ramie(5, 5, 5, 8);
+}
+
 void zabawka(const bool glowa = true, const bool rece = true) {
 	glColor3d(0.1, 0.3, 0.5);
 	const double dlugoscNogi = 25;
@@ -517,20 +524,14 @@ void zabawka(const bool glowa = true, const bool rece = true) {
 		glPushMatrix();
 		glTranslated(5, dlugoscNogi + wysokoscKorpusu - 10, -10);
 		glRotated(rotA, 0, 0, 1);
-		ramie(5, 5, 5, 8);
-		glTranslated(12, 0, 0);
-		glRotated(rotB, 0, 0, 1);
-		ramie(5, 5, 5, 8);
+		ramieZabawki();
 		glPopMatrix();
 
 		// prawe ramie robota
 		glPushMatrix();
 		glTranslated(5, dlugoscNogi + wysokoscKorpusu - 10, -5 + szerokoscKorpusu);
 		glRotated(rotA, 0, 0, 1);
-		ramie(5, 5, 5, 8);
-		glTranslated(12, 0, 0);
-		glRotated(rotB, 0, 0, 1);
-		ramie(5, 5, 5, 8);
+		ramieZabawki();
 		glPopMatrix();
 	}
 }
@@ -629,7 +630,12 @@ void robot(const double d1, const double d2, const double d3, const bool zReka =
 	ramie(15, 10, 5, 30);
 	if (zReka) {
 		glColor3d(0.1, 0.3, 0.5);
-		ramie(5, 5, 5, 8);
+		glPushMatrix();
+		glTranslated(35, 0, 0);
+		glRotated(90, 0, 1, 0);
+		glRotated(-75, 0, 0, 1);
+		ramieZabawki();
+		glPopMatrix();
 	}
 
 	glPopMatrix();
