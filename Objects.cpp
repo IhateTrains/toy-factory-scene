@@ -133,8 +133,6 @@ void sciany() {
 
 	glEnable(GL_CULL_FACE);
 	glPolygonMode(GL_BACK, GL_LINE);
-
-	okna();
 }
 
 void dach() {

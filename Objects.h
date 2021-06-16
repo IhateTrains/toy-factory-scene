@@ -9,6 +9,7 @@ extern double rotA, rotB;
 void podloga();
 void sciany();
 void dach();
+void okna();
 
 
 void skrzynka();

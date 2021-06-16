@@ -122,7 +122,8 @@ void SetupRC()
 	GLfloat	 lightPos[] = { 0.0f, 150.0f, 150.0f, 1.0f };
 	GLfloat  specref[] =  { 1.0f, 1.0f, 1.0f, 1.0f };
 
-	glEnable(GL_BLEND);
+	glEnable(GL_BLEND); // Enable blending
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Set blending function
 
 	glEnable(GL_DEPTH_TEST);	// Hidden surface removal
 	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
@@ -249,6 +250,8 @@ void RenderScene() {
 	}
 
 	tasmociag();
+
+	glPushMatrix();
 	glTranslated(70, 50, -65);
 
 	glPushMatrix();
@@ -266,7 +269,9 @@ void RenderScene() {
 		glTranslated(25, -25, -55);
 		skrzynka();
 	glPopMatrix();
+	glPopMatrix();
 
+	okna();
 
 	/////////////////////////////////////////////////////////////////
 	glPopMatrix();
