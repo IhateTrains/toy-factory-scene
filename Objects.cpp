@@ -191,23 +191,18 @@ void skrzynka()
 	glBindTexture(GL_TEXTURE_2D, texture[1]);
 	glBegin(GL_QUADS);
 		glNormal3d(0, 0, 1);
-		glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, 25);
-		glTexCoord2d(0.0, 1.0); glVertex3d(-25, 25, 25);
-		glTexCoord2d(0.0, 0.0); glVertex3d(-25, -25, 25);
-		glTexCoord2d(1.0, 0.0); glVertex3d(25, -25, 25);
-	glEnd();
+		glTexCoord2d(1.0, 1.0); glVertex3d(-25, 25, 25);
+		glTexCoord2d(0.0, 1.0); glVertex3d(-25, -25, 25);
+		glTexCoord2d(0.0, 0.0); glVertex3d(25, -25, 25);
+		glTexCoord2d(1.0, 0.0); glVertex3d(25, 25, 25);
 
-	glBindTexture(GL_TEXTURE_2D, texture[1]);
-	glBegin(GL_QUADS);
+		glBindTexture(GL_TEXTURE_2D, texture[1]);
 		glNormal3d(1, 0, 0);
 		glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, 25);
 		glTexCoord2d(0.0, 1.0); glVertex3d(25, -25, 25);
 		glTexCoord2d(0.0, 0.0); glVertex3d(25, -25, -25);
 		glTexCoord2d(1.0, 0.0); glVertex3d(25, 25, -25);
-	glEnd();
 
-
-	glBegin(GL_QUADS);
 		glBindTexture(GL_TEXTURE_2D, texture[1]);
 		glNormal3d(0, 0, -1);
 		glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, -25);
