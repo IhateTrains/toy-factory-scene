@@ -290,25 +290,31 @@ void prostopadloscian(const double dlugosc, const double wysokosc, const double 
 	glVertex3d(dlugosc, wysokosc, 0);
 	glVertex3d(dlugosc, 0, 0);
 	glEnd();
-	glBegin(GL_QUAD_STRIP); // TODO: zamieniæ na GL_QUADS
+	glBegin(GL_QUADS);
 	// sciana prawa
 	glNormal3d(1, 0, 0);
 	glVertex3d(dlugosc, wysokosc, 0);
 	glVertex3d(dlugosc, wysokosc, szerokosc);
-	glVertex3d(dlugosc, 0, 0);
 	glVertex3d(dlugosc, 0, szerokosc);
+	glVertex3d(dlugosc, 0, 0);
 	// podstawa dolna
 	glNormal3d(0, -1, 0);
 	glVertex3d(0, 0, 0);
 	glVertex3d(0, 0, szerokosc);
+	glVertex3d(dlugosc, 0, szerokosc);
+	glVertex3d(dlugosc, 0, 0);
 	// sciana lewa
 	glNormal3d(-1, 0, 0);
-	glVertex3d(0, wysokosc, 0);
 	glVertex3d(0, wysokosc, szerokosc);
+	glVertex3d(0, wysokosc, 0);
+	glVertex3d(0, 0, 0);
+	glVertex3d(0, 0, szerokosc);
 	// podstawa gorna
 	glNormal3d(0, 1, 0);
-	glVertex3d(dlugosc, wysokosc, 0);
+	glVertex3d(0, wysokosc, 0);
+	glVertex3d(0, wysokosc, szerokosc);
 	glVertex3d(dlugosc, wysokosc, szerokosc);
+	glVertex3d(dlugosc, wysokosc, 0);
 	glEnd();
 }
 
