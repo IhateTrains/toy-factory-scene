@@ -13,8 +13,6 @@ void dach();
 
 void skrzynka();
 
-void walec01();
-
 void kula();
 
 
@@ -35,7 +33,7 @@ void zabawka(const bool glowa, const bool rece);
 void tasmociag();
 
 
-void robot(double d1, double d2, double d3, const bool zReka);
+void robot(double d1, double d2, double d3, const bool zReka, const double rotacjaReki);
 
 void dwa_roboty();
 

@@ -248,11 +248,22 @@ void RenderScene() {
 
 	tasmociag();
 	glTranslated(70, 50, -65);
-	//dwa_roboty();
-	//ur16e();
-	robot(rot1, rot2, rot3, robotZReka);
-	glTranslated(25, -25, -55);
-	skrzynka();
+
+	glPushMatrix();
+		robot(rot1, rot2, rot3, robotZReka, 1);
+		glTranslated(25, -25, -55);
+		skrzynka();
+		glColor3d(1, 0.5, 0);
+	glPopMatrix();
+
+	glPushMatrix();
+		glTranslated(-40, 0, 185);
+		glRotated(180, 0, 1, 0);
+		glColor3d(1, 0.5, 0);
+		robot(rot1, rot2, rot3, robotZReka, -1);
+		glTranslated(25, -25, -55);
+		skrzynka();
+	glPopMatrix();
 
 
 	/////////////////////////////////////////////////////////////////

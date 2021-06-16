@@ -16,6 +16,9 @@ void podloga() {
 	const double f = 30;
 
 	// podloga fabryki
+	glDisable(GL_CULL_FACE);
+	glPolygonMode(GL_BACK, GL_FILL);
+
 	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
 	glBegin(GL_QUADS);
@@ -26,6 +29,9 @@ void podloga() {
 	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, 0, -rozmiar_fabryki);
 	glEnd();
 	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
+
+	glEnable(GL_CULL_FACE);
+	glPolygonMode(GL_BACK, GL_LINE);
 
 	// trawa
 	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
@@ -154,74 +160,62 @@ void dach() {
 
 void skrzynka()
 {
-	glColor3d(0.8, 0.7, 0.3);
 
 	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
-
-	glBindTexture(GL_TEXTURE_2D, texture[1]);
-	glBegin(GL_QUADS);
-	glNormal3d(0, 0, 1);
-	glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, 25);
-	glTexCoord2d(0.0, 1.0); glVertex3d(-25, 25, 25);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-25, -25, 25);
-	glTexCoord2d(1.0, 0.0); glVertex3d(25, -25, 25);
-	glEnd();
-	glBindTexture(GL_TEXTURE_2D, texture[1]);
-	glBegin(GL_QUADS);
-	glNormal3d(1, 0, 0);
-	glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, 25);
-	glTexCoord2d(0.0, 1.0); glVertex3d(25, -25, 25);
-	glTexCoord2d(0.0, 0.0); glVertex3d(25, -25, -25);
-	glTexCoord2d(1.0, 0.0); glVertex3d(25, 25, -25);
-	glEnd();
-
-
-	glBegin(GL_QUADS);
-	glBindTexture(GL_TEXTURE_2D, texture[1]);
-	glNormal3d(0, 0, -1);
-	glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, -25);
-	glTexCoord2d(0.0, 1.0); glVertex3d(25, -25, -25);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-25, -25, -25);
-	glTexCoord2d(1.0, 0.0); glVertex3d(-25, 25, -25);
-
-	glNormal3d(-1, 0, 0);
-	glBindTexture(GL_TEXTURE_2D, texture[1]);
-	glTexCoord2d(1.0, 1.0); glVertex3d(-25, 25, -25);
-	glTexCoord2d(0.0, 1.0); glVertex3d(-25, -25, -25);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-25, -25, 25);
-	glTexCoord2d(1.0, 0.0); glVertex3d(-25, 25, 25);
-
-	// wierzch skrzynki
-	glColor3d(0.0, 0.0, 0.0);
-	glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, 25);
-	glTexCoord2d(0.0, 1.0); glVertex3d(25, 25, -25);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-25, 25, -25);
-	glTexCoord2d(1.0, 0.0); glVertex3d(-25, 25, 25);
-
 	glColor3d(0.8, 0.7, 0.3);
-	glNormal3d(0, -1, 0);
+
 	glBindTexture(GL_TEXTURE_2D, texture[1]);
-	glTexCoord2d(1.0, 1.0); glVertex3d(25, -25, 25);
-	glTexCoord2d(0.0, 1.0); glVertex3d(-25, -25, 25);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-25, -25, -25);
-	glTexCoord2d(1.0, 0.0); glVertex3d(25, -25, -25);
-
-	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
+	glBegin(GL_QUADS);
+		glNormal3d(0, 0, 1);
+		glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, 25);
+		glTexCoord2d(0.0, 1.0); glVertex3d(-25, 25, 25);
+		glTexCoord2d(0.0, 0.0); glVertex3d(-25, -25, 25);
+		glTexCoord2d(1.0, 0.0); glVertex3d(25, -25, 25);
 	glEnd();
-}
 
-void walec01()
-{
-	GLUquadricObj* obj = gluNewQuadric();
-	gluQuadricNormals(obj, GLU_SMOOTH);
-	glColor3d(1, 0, 0);
-	glPushMatrix();
-	gluCylinder(obj, 20, 20, 30, 15, 7);
-	gluCylinder(obj, 0, 20, 0, 15, 7);
-	glTranslated(0, 0, 60);
-	glRotated(180.0, 0, 1, 0);
-	gluCylinder(obj, 0, 20, 30, 15, 7);
-	glPopMatrix();
+	glBindTexture(GL_TEXTURE_2D, texture[1]);
+	glBegin(GL_QUADS);
+		glNormal3d(1, 0, 0);
+		glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, 25);
+		glTexCoord2d(0.0, 1.0); glVertex3d(25, -25, 25);
+		glTexCoord2d(0.0, 0.0); glVertex3d(25, -25, -25);
+		glTexCoord2d(1.0, 0.0); glVertex3d(25, 25, -25);
+	glEnd();
+
+
+	glBegin(GL_QUADS);
+		glBindTexture(GL_TEXTURE_2D, texture[1]);
+		glNormal3d(0, 0, -1);
+		glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, -25);
+		glTexCoord2d(0.0, 1.0); glVertex3d(25, -25, -25);
+		glTexCoord2d(0.0, 0.0); glVertex3d(-25, -25, -25);
+		glTexCoord2d(1.0, 0.0); glVertex3d(-25, 25, -25);
+
+		glNormal3d(-1, 0, 0);
+		glBindTexture(GL_TEXTURE_2D, texture[1]);
+		glTexCoord2d(1.0, 1.0); glVertex3d(-25, 25, -25);
+		glTexCoord2d(0.0, 1.0); glVertex3d(-25, -25, -25);
+		glTexCoord2d(0.0, 0.0); glVertex3d(-25, -25, 25);
+		glTexCoord2d(1.0, 0.0); glVertex3d(-25, 25, 25);
+
+		// wierzch skrzynki
+		glColor3d(0.0, 0.0, 0.0);
+		glTexCoord2d(1.0, 1.0); glVertex3d(25, 25, 25);
+		glTexCoord2d(0.0, 1.0); glVertex3d(25, 25, -25);
+		glTexCoord2d(0.0, 0.0); glVertex3d(-25, 25, -25);
+		glTexCoord2d(1.0, 0.0); glVertex3d(-25, 25, 25);
+
+		glColor3d(0.8, 0.7, 0.3);
+		glNormal3d(0, -1, 0);
+		glBindTexture(GL_TEXTURE_2D, texture[1]);
+		glTexCoord2d(1.0, 1.0); glVertex3d(25, -25, 25);
+		glTexCoord2d(0.0, 1.0); glVertex3d(-25, -25, 25);
+		glTexCoord2d(0.0, 0.0); glVertex3d(-25, -25, -25);
+		glTexCoord2d(1.0, 0.0); glVertex3d(25, -25, -25);
+
+		glEnd();
+	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
+	glColor3d(1, 0.5, 0);
 }
 
 void kula()
@@ -318,7 +312,7 @@ void prostopadloscian(const double dlugosc, const double wysokosc, const double 
 
 void walec(const double h, const double r) {
 	double x, y, alpha;
-	const double rozdzielczosc = 16;
+	const double rozdzielczosc = 32;
 	//dolna podstawa
 	glBegin(GL_TRIANGLE_FAN);
 	glNormal3d(0, 0, -1);
@@ -549,7 +543,7 @@ void tasmociag() {
 	// gora
 	glBegin(GL_QUADS);
 	glNormal3d(0, 1, 0);
-	for (int i = 0; i < 40; ++i) {
+	for (int i = 0; i < 36; ++i) {
 		if (i % 2 == 0) {
 			glColor3d(0, 0, 0);
 		}
@@ -566,7 +560,7 @@ void tasmociag() {
 	// dol
 	glBegin(GL_QUADS);
 	glNormal3d(0, -1, 0);
-	for (int i = 0; i < 40; ++i) {
+	for (int i = 0; i < 36; ++i) {
 		if (i % 2 == 0) {
 			glColor3d(0, 0, 0);
 		}
@@ -581,7 +575,7 @@ void tasmociag() {
 	glEnd();
 
 	// zabawki
-	for (int i = 0; i < 40; i += 2) {
+	for (int i = 0; i < 36; i += 2) {
 		glPushMatrix();
 		glTranslated(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 12.5);
 		if (i < 10) {
@@ -599,13 +593,13 @@ void tasmociag() {
 	// walce
 	for (int j = -rozmiar_fabryki + 20; j <= rozmiar_fabryki - 20; j+=40) {
 		glPushMatrix();
-		glColor3d(0, 0, 0);
-		glTranslated(j, 0, -5);
-		prostopadloscian(6, 36, 6);
-		glTranslated(0, 0, 55);
-		prostopadloscian(6, 36, 6);
-		glTranslated(3, 20, -50);
-		walec(50, 15);
+			glColor3d(0, 0, 0);
+			glTranslated(j, 0, -5);
+			prostopadloscian(6, 36, 6);
+			glTranslated(0, 0, 55);
+			prostopadloscian(6, 36, 6);
+			glTranslated(3, 20, -50);
+			walec(50, 15);
 		glPopMatrix();
 	}
 
@@ -613,7 +607,7 @@ void tasmociag() {
 	glEnable(GL_CULL_FACE);
 }
 
-void robot(const double d1, const double d2, const double d3, const bool zReka = false) {
+void robot(const double d1, const double d2, const double d3, const bool zReka, const double rotacjaReki) {
 	glColor3d(1, 0.5, 0);
 
 	glPushMatrix();
@@ -647,7 +641,8 @@ void robot(const double d1, const double d2, const double d3, const bool zReka =
 		glColor3d(0.1, 0.3, 0.5);
 		glPushMatrix();
 		glTranslated(35, 0, 0);
-		glRotated(90, 0, 1, 0);
+		glTranslated(abs(rotacjaReki-1)*5, 0, 0);
+		glRotated(90* rotacjaReki, 0, 1, 0);
 		glRotated(-75, 0, 0, 1);
 		ramieZabawki();
 		glPopMatrix();
@@ -679,11 +674,13 @@ void ur16e() {
 
 void dwa_roboty() {
 	glPushMatrix();
-	robot(rot1, rot2, rot3);
+	robot(rot1, rot2, rot3, false, 1);
 	glPopMatrix();
 
 	glPushMatrix();
 	glTranslated(100, 0, 0);
-	robot(rot1, rot2, rot3);
+	robot(rot1, rot2, rot3, false, 1);
 	glPopMatrix();
 }
+
+
