@@ -28,7 +28,7 @@
 #include <cstdio>
 
 #define glRGB(x, y, z)	glColor3ub((GLubyte)x, (GLubyte)y, (GLubyte)z)
-#define BITMAP_ID 0x4D42		// identyfikator formatu BMP
+constexpr int BITMAP_ID = 0x4D42;		// identyfikator formatu BMP
 
 unsigned int texture[5];			// obiekt tekstury
 
