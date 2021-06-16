@@ -41,7 +41,7 @@ bool robotZReka = false;
 
 
 // dla robota PUMA
-double rot1, rot2 = -30, rot3 = 0;
+double rot1 = -180, rot2 = 0, rot3 = 0;
 // dla zabawek
 double rotA = -75, rotB = 15;
 
@@ -599,6 +599,10 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 
 			if (licznik <= 60) {
 				tasmociagStartPos = licznik;
+				if (licznik <= 18) {
+					rot1 += 10;
+					rot2 -= 1.5;
+				}
 			}
 			else if (licznik <= 69) {
 				robotZReka = true;
@@ -614,10 +618,6 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 			else if (licznik <= 78 + 1) {
 				tasmociagStartPos = 0;
 				robotZReka = false;
-			}
-			else if (licznik <= 78 + 1 + 18) {
-				rot1 += 10;
-				rot2 -= 1.5;
 			}
 			else {
 				licznik = 0;
@@ -696,33 +696,21 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 		// Key press, check for arrow keys to do cube rotation.
 	case WM_KEYDOWN:
 	{
-		if (wParam == VK_UP)
+		if (wParam == VK_UP) {
 			xRot -= 5.0f;
-
-		if (wParam == VK_DOWN)
+		}
+		else if (wParam == VK_DOWN){
 			xRot += 5.0f;
-
-		if (wParam == VK_LEFT)
+		}
+		else if (wParam == VK_LEFT) {
 			yRot -= 5.0f;
-
-		if (wParam == VK_RIGHT)
+		}
+		else if (wParam == VK_RIGHT) {
 			yRot += 5.0f;
+		}
 
 		xRot = static_cast<const int>(xRot) % 360;
 		yRot = static_cast<const int>(yRot) % 360;
-
-		if (wParam == '1')
-			rot1 -= 5.0f;
-		if (wParam == '2')
-			rot1 += 5.0f;
-		if (wParam == '3')
-			rot2 -= 5.0f;
-		if (wParam == '4')
-			rot2 += 5.0f;
-		if (wParam == '5')
-			rot3 -= 5.0f;
-		if (wParam == '6')
-			rot3 += 5.0f;
 
 		InvalidateRect(hWnd, nullptr, FALSE);
 	}
