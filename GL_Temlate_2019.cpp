@@ -127,7 +127,7 @@ void SetupRC()
 	glEnable(GL_DEPTH_TEST);	// Hidden surface removal
 	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
 	glEnable(GL_CULL_FACE);		// Do not calculate inside of object
-	glCullFace(GL_FRONT_AND_BACK);
+	glCullFace(GL_BACK);
 
 	// Enable lighting
 	glEnable(GL_LIGHTING);
