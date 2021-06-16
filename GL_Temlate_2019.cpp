@@ -46,7 +46,6 @@ double rot1, rot2 = -30, rot3 = 0;
 double rotA = -75, rotB = 15;
 
 
-
 // Color Palette handle
 HPALETTE hPalette = nullptr;
 
@@ -224,8 +223,6 @@ unsigned char *LoadBitmapFile(char *filename, BITMAPINFOHEADER *bitmapInfoHeader
 
 // Called to draw scene
 void RenderScene() {
-	//float normal[3];	// Storage for calculated surface normal
-
 	// Clear the window with current clearing color
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -234,17 +231,10 @@ void RenderScene() {
 	glRotatef(xRot, 1.0f, 0.0f, 0.0f);
 	glRotatef(yRot, 0.0f, 1.0f, 0.0f);
 
-	/////////////////////////////////////////////////////////////////
-	// MIEJSCE NA KOD OPENGL DO TWORZENIA WLASNYCH SCEN:		   //
-	/////////////////////////////////////////////////////////////////
-
 	//Sposób na odróŸnienie "przedniej" i "tylniej" œciany wielok¹ta:
 	glPolygonMode(GL_BACK, GL_LINE);
 	//Uzyskanie siatki:
 	//glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-
-	//Wyrysowanie prostokata:
-	//glRectd(-10.0, -10.0, 20.0, 20.0);
 	
 	//walec(50, 20);
 	//dwa_roboty();

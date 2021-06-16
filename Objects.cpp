@@ -177,7 +177,6 @@ void skrzynka()
 	glEnd();
 
 
-
 	glBegin(GL_QUADS);
 	glBindTexture(GL_TEXTURE_2D, texture[1]);
 	glNormal3d(0, 0, -1);
