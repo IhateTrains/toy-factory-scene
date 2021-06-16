@@ -9,6 +9,8 @@
 
 constexpr auto GL_PI = 3.14;
 constexpr auto rozmiar_fabryki = 3 * 128;
+constexpr auto wys_scian = 300;
+constexpr auto szczyt_dachu = 500;
 
 void podloga() {
 	glColor3d(1, 1, 1);
@@ -46,6 +48,28 @@ void podloga() {
 	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
 }
 
+void okna() {
+	glDisable(GL_CULL_FACE);
+	glPolygonMode(GL_BACK, GL_FILL);
+
+	glColor4d(0, 0.5, 0.5, 0.3);
+	glPushMatrix();
+	glBegin(GL_TRIANGLES);
+	// tylne
+	glVertex3d(0, szczyt_dachu, -rozmiar_fabryki);
+	glVertex3d(-rozmiar_fabryki, wys_scian, -rozmiar_fabryki);
+	glVertex3d(rozmiar_fabryki, wys_scian, -rozmiar_fabryki);
+	// przednie
+	glVertex3d(0, szczyt_dachu, rozmiar_fabryki);
+	glVertex3d(-rozmiar_fabryki, wys_scian, rozmiar_fabryki);
+	glVertex3d(rozmiar_fabryki, wys_scian, rozmiar_fabryki);
+	glEnd();
+	glPopMatrix();
+
+	glEnable(GL_CULL_FACE);
+	glPolygonMode(GL_BACK, GL_LINE);
+}
+
 void sciany() {
 	glDisable(GL_CULL_FACE);
 	glPolygonMode(GL_BACK, GL_FILL);
@@ -58,49 +82,49 @@ void sciany() {
 	glBegin(GL_QUADS);
 	// sciana tylna
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, 300, -rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, wys_scian, -rozmiar_fabryki);
 	glTexCoord2d(0.0, f); glVertex3d(-rozmiar_fabryki, 0, -rozmiar_fabryki);
 	glTexCoord2d(f, f); glVertex3d(rozmiar_fabryki, 0, -rozmiar_fabryki);
-	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, 300, -rozmiar_fabryki);
+	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, wys_scian, -rozmiar_fabryki);
 	// sciana przednia
 	glNormal3d(0, 0, -1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(rozmiar_fabryki, 300, rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(rozmiar_fabryki, wys_scian, rozmiar_fabryki);
 	glTexCoord2d(0.0, f); glVertex3d(rozmiar_fabryki, 0, rozmiar_fabryki);
 	glTexCoord2d(f, f); glVertex3d(-rozmiar_fabryki, 0, rozmiar_fabryki);
-	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, 300, rozmiar_fabryki);
+	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, wys_scian, rozmiar_fabryki);
 	// sciana lewa z otworem
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, 300, rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, wys_scian, rozmiar_fabryki);
 	glTexCoord2d(0.0, f); glVertex3d(-rozmiar_fabryki, 0, rozmiar_fabryki);
 	glTexCoord2d(f, f); glVertex3d(-rozmiar_fabryki, 0, 50);
-	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, 300, 50);
+	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, wys_scian, 50);
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, 300, 50);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, wys_scian, 50);
 	glTexCoord2d(0.0, f); glVertex3d(-rozmiar_fabryki, 120, 50);
 	glTexCoord2d(f, f); glVertex3d(-rozmiar_fabryki, 120, 0);
-	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, 300, 0);
+	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, wys_scian, 0);
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, 300, 0);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, wys_scian, 0);
 	glTexCoord2d(0.0, f); glVertex3d(-rozmiar_fabryki, 0, 0);
 	glTexCoord2d(f, f); glVertex3d(-rozmiar_fabryki, 0, -rozmiar_fabryki);
-	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, 300, -rozmiar_fabryki);
+	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, wys_scian, -rozmiar_fabryki);
 	
 	// sciana prawa z otworem
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(rozmiar_fabryki, 300, -rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(rozmiar_fabryki, wys_scian, -rozmiar_fabryki);
 	glTexCoord2d(0.0, f); glVertex3d(rozmiar_fabryki, 0, -rozmiar_fabryki);
 	glTexCoord2d(f, f); glVertex3d(rozmiar_fabryki, 0, 0);
-	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, 300, 0);
+	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, wys_scian, 0);
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(rozmiar_fabryki, 300, 0);
+	glTexCoord2d(0.0, 0.0); glVertex3d(rozmiar_fabryki, wys_scian, 0);
 	glTexCoord2d(0.0, f); glVertex3d(rozmiar_fabryki, 120, 0);
 	glTexCoord2d(f, f); glVertex3d(rozmiar_fabryki, 120, 50);
-	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, 300, 50);
+	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, wys_scian, 50);
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(rozmiar_fabryki, 300, 50);
+	glTexCoord2d(0.0, 0.0); glVertex3d(rozmiar_fabryki, wys_scian, 50);
 	glTexCoord2d(0.0, f); glVertex3d(rozmiar_fabryki, 0, 50);
 	glTexCoord2d(f, f); glVertex3d(rozmiar_fabryki, 0, rozmiar_fabryki);
-	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, 300, rozmiar_fabryki);
+	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, wys_scian, rozmiar_fabryki);
 
 	glEnd();
 
@@ -109,6 +133,8 @@ void sciany() {
 
 	glEnable(GL_CULL_FACE);
 	glPolygonMode(GL_BACK, GL_LINE);
+
+	okna();
 }
 
 void dach() {
@@ -125,30 +151,30 @@ void dach() {
 
 	// lewa strona dachu
 	double vl[3][3] = {
-		{ -rozmiar_fabryki, 300, -rozmiar_fabryki },
-		{ -rozmiar_fabryki, 300, rozmiar_fabryki },
-		{ 0, 500, rozmiar_fabryki }
+		{ -rozmiar_fabryki, wys_scian, -rozmiar_fabryki },
+		{ -rozmiar_fabryki, wys_scian, rozmiar_fabryki },
+		{ 0, szczyt_dachu, rozmiar_fabryki }
 	};
 	double norm[3];
 	calcNormal(vl, norm);
 	glNormal3d(norm[0], norm[1], norm[2]);
-	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, 300, -rozmiar_fabryki);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, 300, rozmiar_fabryki);
-	glTexCoord2d(0.0, f); glVertex3d(0, 500, rozmiar_fabryki);
-	glTexCoord2d(f, f); glVertex3d(0, 500, -rozmiar_fabryki);
+	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, wys_scian, -rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, wys_scian, rozmiar_fabryki);
+	glTexCoord2d(0.0, f); glVertex3d(0, szczyt_dachu, rozmiar_fabryki);
+	glTexCoord2d(f, f); glVertex3d(0, szczyt_dachu, -rozmiar_fabryki);
 
 	// prawa strona dachu
 	double vr[3][3] = {
-		{ 0, 500, -rozmiar_fabryki },
-		{ 0, 500, rozmiar_fabryki },
-		{ rozmiar_fabryki, 300, rozmiar_fabryki }
+		{ 0, szczyt_dachu, -rozmiar_fabryki },
+		{ 0, szczyt_dachu, rozmiar_fabryki },
+		{ rozmiar_fabryki, wys_scian, rozmiar_fabryki }
 	};
 	calcNormal(vr, norm);
 	glNormal3d(norm[0], norm[1], norm[2]);
-	glTexCoord2d(f, 0.0); glVertex3d(0, 500, -rozmiar_fabryki);
-	glTexCoord2d(0.0, 0.0); glVertex3d(0, 500, rozmiar_fabryki);
-	glTexCoord2d(0.0, f);  glVertex3d(rozmiar_fabryki, 300, rozmiar_fabryki);
-	glTexCoord2d(f, f); glVertex3d(rozmiar_fabryki, 300, -rozmiar_fabryki);
+	glTexCoord2d(f, 0.0); glVertex3d(0, szczyt_dachu, -rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(0, szczyt_dachu, rozmiar_fabryki);
+	glTexCoord2d(0.0, f);  glVertex3d(rozmiar_fabryki, wys_scian, rozmiar_fabryki);
+	glTexCoord2d(f, f); glVertex3d(rozmiar_fabryki, wys_scian, -rozmiar_fabryki);
 	glEnd();
 	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
 
