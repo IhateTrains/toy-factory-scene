@@ -122,10 +122,12 @@ void SetupRC()
 	GLfloat	 lightPos[] = { 0.0f, 150.0f, 150.0f, 1.0f };
 	GLfloat  specref[] =  { 1.0f, 1.0f, 1.0f, 1.0f };
 
+	glEnable(GL_BLEND);
 
 	glEnable(GL_DEPTH_TEST);	// Hidden surface removal
 	glFrontFace(GL_CCW);		// Counter clock-wise polygons face out
-	glEnable(GL_CULL_FACE);		// Do not calculate inside of jet
+	glEnable(GL_CULL_FACE);		// Do not calculate inside of object
+	glCullFace(GL_FRONT_AND_BACK);
 
 	// Enable lighting
 	glEnable(GL_LIGHTING);
