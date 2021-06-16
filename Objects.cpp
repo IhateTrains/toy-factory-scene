@@ -8,7 +8,7 @@
 
 
 constexpr auto GL_PI = 3.14;
-constexpr auto rozmiar_fabryki = 128;
+constexpr auto rozmiar_fabryki = 3 * 128;
 
 void podloga() {
 	glColor3d(1, 1, 1);
@@ -20,10 +20,10 @@ void podloga() {
 	glBindTexture(GL_TEXTURE_2D, texture[0]);
 	glBegin(GL_QUADS);
 	glNormal3d(0, 1, 0);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-k * rozmiar_fabryki, 0, -k * rozmiar_fabryki);
-	glTexCoord2d(0.0, f); glVertex3d(-k * rozmiar_fabryki, 0, k * rozmiar_fabryki);
-	glTexCoord2d(f, f); glVertex3d(k * rozmiar_fabryki, 0, k * rozmiar_fabryki);
-	glTexCoord2d(f, 0.0); glVertex3d(k * rozmiar_fabryki, 0, -k * rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, 0, -rozmiar_fabryki);
+	glTexCoord2d(0.0, f); glVertex3d(-rozmiar_fabryki, 0, rozmiar_fabryki);
+	glTexCoord2d(f, f); glVertex3d(rozmiar_fabryki, 0, rozmiar_fabryki);
+	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, 0, -rozmiar_fabryki);
 	glEnd();
 	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
 
@@ -48,54 +48,53 @@ void sciany() {
 	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
 	glBindTexture(GL_TEXTURE_2D, texture[2]);
 
-	const double k = 3;
 	const double f = 50;
 	glBegin(GL_QUADS);
 	// sciana tylna
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, -k * rozmiar_fabryki);
-	glTexCoord2d(0.0, f); glVertex3d(-k * rozmiar_fabryki, 0, -k * rozmiar_fabryki);
-	glTexCoord2d(f, f); glVertex3d(k * rozmiar_fabryki, 0, -k * rozmiar_fabryki);
-	glTexCoord2d(f, 0.0); glVertex3d(k * rozmiar_fabryki, 300, -k * rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, 300, -rozmiar_fabryki);
+	glTexCoord2d(0.0, f); glVertex3d(-rozmiar_fabryki, 0, -rozmiar_fabryki);
+	glTexCoord2d(f, f); glVertex3d(rozmiar_fabryki, 0, -rozmiar_fabryki);
+	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, 300, -rozmiar_fabryki);
 	// sciana przednia
 	glNormal3d(0, 0, -1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(k * rozmiar_fabryki, 300, k * rozmiar_fabryki);
-	glTexCoord2d(0.0, f); glVertex3d(k * rozmiar_fabryki, 0, k * rozmiar_fabryki);
-	glTexCoord2d(f, f); glVertex3d(-k * rozmiar_fabryki, 0, k * rozmiar_fabryki);
-	glTexCoord2d(f, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, k * rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(rozmiar_fabryki, 300, rozmiar_fabryki);
+	glTexCoord2d(0.0, f); glVertex3d(rozmiar_fabryki, 0, rozmiar_fabryki);
+	glTexCoord2d(f, f); glVertex3d(-rozmiar_fabryki, 0, rozmiar_fabryki);
+	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, 300, rozmiar_fabryki);
 	// sciana lewa z otworem
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, k * rozmiar_fabryki);
-	glTexCoord2d(0.0, f); glVertex3d(-k * rozmiar_fabryki, 0, k * rozmiar_fabryki);
-	glTexCoord2d(f, f); glVertex3d(-k * rozmiar_fabryki, 0, 50);
-	glTexCoord2d(f, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, 50);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, 300, rozmiar_fabryki);
+	glTexCoord2d(0.0, f); glVertex3d(-rozmiar_fabryki, 0, rozmiar_fabryki);
+	glTexCoord2d(f, f); glVertex3d(-rozmiar_fabryki, 0, 50);
+	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, 300, 50);
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, 50);
-	glTexCoord2d(0.0, f); glVertex3d(-k * rozmiar_fabryki, 120, 50);
-	glTexCoord2d(f, f); glVertex3d(-k * rozmiar_fabryki, 120, 0);
-	glTexCoord2d(f, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, 0);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, 300, 50);
+	glTexCoord2d(0.0, f); glVertex3d(-rozmiar_fabryki, 120, 50);
+	glTexCoord2d(f, f); glVertex3d(-rozmiar_fabryki, 120, 0);
+	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, 300, 0);
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, 0);
-	glTexCoord2d(0.0, f); glVertex3d(-k * rozmiar_fabryki, 0, 0);
-	glTexCoord2d(f, f); glVertex3d(-k * rozmiar_fabryki, 0, -k * rozmiar_fabryki);
-	glTexCoord2d(f, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, -k * rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, 300, 0);
+	glTexCoord2d(0.0, f); glVertex3d(-rozmiar_fabryki, 0, 0);
+	glTexCoord2d(f, f); glVertex3d(-rozmiar_fabryki, 0, -rozmiar_fabryki);
+	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, 300, -rozmiar_fabryki);
 	
 	// sciana prawa z otworem
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(k * rozmiar_fabryki, 300, -k * rozmiar_fabryki);
-	glTexCoord2d(0.0, f); glVertex3d(k * rozmiar_fabryki, 0, -k * rozmiar_fabryki);
-	glTexCoord2d(f, f); glVertex3d(k * rozmiar_fabryki, 0, 0);
-	glTexCoord2d(f, 0.0); glVertex3d(k * rozmiar_fabryki, 300, 0);
+	glTexCoord2d(0.0, 0.0); glVertex3d(rozmiar_fabryki, 300, -rozmiar_fabryki);
+	glTexCoord2d(0.0, f); glVertex3d(rozmiar_fabryki, 0, -rozmiar_fabryki);
+	glTexCoord2d(f, f); glVertex3d(rozmiar_fabryki, 0, 0);
+	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, 300, 0);
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(k * rozmiar_fabryki, 300, 0);
-	glTexCoord2d(0.0, f); glVertex3d(k * rozmiar_fabryki, 120, 0);
-	glTexCoord2d(f, f); glVertex3d(k * rozmiar_fabryki, 120, 50);
-	glTexCoord2d(f, 0.0); glVertex3d(k * rozmiar_fabryki, 300, 50);
+	glTexCoord2d(0.0, 0.0); glVertex3d(rozmiar_fabryki, 300, 0);
+	glTexCoord2d(0.0, f); glVertex3d(rozmiar_fabryki, 120, 0);
+	glTexCoord2d(f, f); glVertex3d(rozmiar_fabryki, 120, 50);
+	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, 300, 50);
 	glNormal3d(0, 0, 1);
-	glTexCoord2d(0.0, 0.0); glVertex3d(k * rozmiar_fabryki, 300, 50);
-	glTexCoord2d(0.0, f); glVertex3d(k * rozmiar_fabryki, 0, 50);
-	glTexCoord2d(f, f); glVertex3d(k * rozmiar_fabryki, 0, k * rozmiar_fabryki);
-	glTexCoord2d(f, 0.0); glVertex3d(k * rozmiar_fabryki, 300, k * rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(rozmiar_fabryki, 300, 50);
+	glTexCoord2d(0.0, f); glVertex3d(rozmiar_fabryki, 0, 50);
+	glTexCoord2d(f, f); glVertex3d(rozmiar_fabryki, 0, rozmiar_fabryki);
+	glTexCoord2d(f, 0.0); glVertex3d(rozmiar_fabryki, 300, rozmiar_fabryki);
 
 	glEnd();
 
@@ -120,30 +119,30 @@ void dach() {
 
 	// lewa strona dachu
 	double vl[3][3] = {
-		{ -k * rozmiar_fabryki, 300, -k * rozmiar_fabryki },
-		{ -k * rozmiar_fabryki, 300, k * rozmiar_fabryki },
-		{ 0, 500, k * rozmiar_fabryki }
+		{ -rozmiar_fabryki, 300, -rozmiar_fabryki },
+		{ -rozmiar_fabryki, 300, rozmiar_fabryki },
+		{ 0, 500, rozmiar_fabryki }
 	};
 	double norm[3];
 	calcNormal(vl, norm);
 	glNormal3d(norm[0], norm[1], norm[2]);
-	glTexCoord2d(f, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, -k * rozmiar_fabryki);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-k * rozmiar_fabryki, 300, k * rozmiar_fabryki);
-	glTexCoord2d(0.0, f); glVertex3d(0, 500, k * rozmiar_fabryki);
-	glTexCoord2d(f, f); glVertex3d(0, 500, -k * rozmiar_fabryki);
+	glTexCoord2d(f, 0.0); glVertex3d(-rozmiar_fabryki, 300, -rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-rozmiar_fabryki, 300, rozmiar_fabryki);
+	glTexCoord2d(0.0, f); glVertex3d(0, 500, rozmiar_fabryki);
+	glTexCoord2d(f, f); glVertex3d(0, 500, -rozmiar_fabryki);
 
 	// prawa strona dachu
 	double vr[3][3] = {
-		{ 0, 500, -k * rozmiar_fabryki },
-		{ 0, 500, k * rozmiar_fabryki },
-		{ k * rozmiar_fabryki, 300, k * rozmiar_fabryki }
+		{ 0, 500, -rozmiar_fabryki },
+		{ 0, 500, rozmiar_fabryki },
+		{ rozmiar_fabryki, 300, rozmiar_fabryki }
 	};
 	calcNormal(vr, norm);
 	glNormal3d(norm[0], norm[1], norm[2]);
-	glTexCoord2d(f, 0.0); glVertex3d(0, 500, -k * rozmiar_fabryki);
-	glTexCoord2d(0.0, 0.0); glVertex3d(0, 500, k * rozmiar_fabryki);
-	glTexCoord2d(0.0, f);  glVertex3d(k * rozmiar_fabryki, 300, k * rozmiar_fabryki);
-	glTexCoord2d(f, f); glVertex3d(k * rozmiar_fabryki, 300, -k * rozmiar_fabryki);
+	glTexCoord2d(f, 0.0); glVertex3d(0, 500, -rozmiar_fabryki);
+	glTexCoord2d(0.0, 0.0); glVertex3d(0, 500, rozmiar_fabryki);
+	glTexCoord2d(0.0, f);  glVertex3d(rozmiar_fabryki, 300, rozmiar_fabryki);
+	glTexCoord2d(f, f); glVertex3d(rozmiar_fabryki, 300, -rozmiar_fabryki);
 	glEnd();
 	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
 
@@ -550,7 +549,6 @@ void tasmociag() {
 	// gora
 	glBegin(GL_QUADS);
 	glNormal3d(0, 1, 0);
-
 	for (int i = 0; i < 40; ++i) {
 		if (i % 2 == 0) {
 			glColor3d(0, 0, 0);
@@ -568,7 +566,6 @@ void tasmociag() {
 	// dol
 	glBegin(GL_QUADS);
 	glNormal3d(0, -1, 0);
-
 	for (int i = 0; i < 40; ++i) {
 		if (i % 2 == 0) {
 			glColor3d(0, 0, 0);
@@ -586,7 +583,7 @@ void tasmociag() {
 	// zabawki
 	for (int i = 0; i < 40; i += 2) {
 		glPushMatrix();
-		glTranslated(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 36, 12.5);
+		glTranslated(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 12.5);
 		if (i < 10) {
 			zabawka(false, false);
 		}
@@ -596,6 +593,19 @@ void tasmociag() {
 		else {
 			zabawka(true, true);
 		}
+		glPopMatrix();
+	}
+
+	// walce
+	for (int j = -rozmiar_fabryki + 20; j <= rozmiar_fabryki - 20; j+=40) {
+		glPushMatrix();
+		glColor3d(0, 0, 0);
+		glTranslated(j, 0, -5);
+		prostopadloscian(6, 36, 6);
+		glTranslated(0, 0, 55);
+		prostopadloscian(6, 36, 6);
+		glTranslated(3, 20, -50);
+		walec(50, 15);
 		glPopMatrix();
 	}
 

@@ -235,8 +235,9 @@ void RenderScene() {
 	glPolygonMode(GL_BACK, GL_LINE);
 	//Uzyskanie siatki:
 	//glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-	
-	//walec(50, 20);
+
+
+	/////////////////////////////////////////////////////////////////
 	//dwa_roboty();
 	glTranslated(0, -50, 0);
 	podloga();
@@ -244,7 +245,7 @@ void RenderScene() {
 	if (pokazDach) {
 		dach();
 	}
-	
+
 	tasmociag();
 	glTranslated(70, 50, -65);
 	//dwa_roboty();
@@ -254,9 +255,6 @@ void RenderScene() {
 	skrzynka();
 
 
-
-	/////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////
 	glPopMatrix();
 	glMatrixMode(GL_MODELVIEW);
@@ -591,16 +589,22 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 			if (licznik <= 60) {
 				tasmociagStartPos = licznik;
 			}
-			else if (licznik < 79) {
+			else if (licznik <= 69) {
 				robotZReka = true;
 				rot1 -= 10;
 				rot2 += 1.5;
+				rot3 += 5;
 			}
-			else if (licznik < 79 + 1) {
+			else if (licznik <= 78) {
+				rot1 -= 10;
+				rot2 += 1.5;
+				rot3 -= 5;
+			}
+			else if (licznik <= 78 + 1) {
 				tasmociagStartPos = 0;
 				robotZReka = false;
 			}
-			else if (licznik < 79 + 1 + 18) {
+			else if (licznik <= 78 + 1 + 18) {
 				rot1 += 10;
 				rot2 -= 1.5;
 			}
