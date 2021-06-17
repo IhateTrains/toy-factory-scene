@@ -249,16 +249,15 @@ void RenderScene() {
 	tasmociag();
 
 	glPushMatrix();
-
 	glTranslated(70, 50, -65);
 
+	// pumy
 	glPushMatrix();
 		robot(rot1, rot2, rot3, robotZReka, 1);
 		glTranslated(25, -25, -55);
 		skrzynka();
 		glColor3d(1, 0.5, 0);
 	glPopMatrix();
-
 	glPushMatrix();
 		glTranslated(-40, 0, 185);
 		glRotated(180, 0, 1, 0);
@@ -267,8 +266,11 @@ void RenderScene() {
 		glTranslated(25, -25, -55);
 		skrzynka();
 	glPopMatrix();
-
-
+	// robot UR16e
+	glPushMatrix();
+	glTranslated(-100, -50, 0);
+	ur16e(rot1, rot2, rot3, robotZReka);
+	glPopMatrix();
 
 	glPopMatrix();
 

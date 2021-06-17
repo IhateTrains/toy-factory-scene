@@ -647,11 +647,14 @@ void robot(const double d1, const double d2, const double d3, const bool zReka, 
 	glColor3d(1, 0.5, 0);
 
 	glPushMatrix();
+	// f
 	glRotated(-90, 1, 0, 0);
 	glTranslated(0, 0, -50);
 
+	// g
 	walec(5, 30);
 
+	// h
 	glTranslated(0, 0, 5);
 	walec(40, 10);
 
@@ -687,7 +690,7 @@ void robot(const double d1, const double d2, const double d3, const bool zReka, 
 	glPopMatrix();
 }
 
-void ur16e(const double d1, const double d2, const double d3, const bool zReka, const double rotacjaReki) {
+void ur16e(const double d1, const double d2, const double d3, const bool zGlowa) {
 	double rotacjaDolu = 5;
 
 	glPushMatrix();
@@ -698,10 +701,10 @@ void ur16e(const double d1, const double d2, const double d3, const bool zReka, 
 	glRotated(rotacjaDolu, 0, 0, 1);
 	walec(30, 10);
 
-	/*glTranslated(0, 30, 0);
+	glTranslated(0, 0, 30);
 	glRotated(90, 1, 0, 0);
 	walec(40, 10);
-	glTranslated(0, 30, 0);
+	/*glTranslated(0, 30, 0);
 	glRotated(90, 1, 0, 0);
 	walec(90, 10);
 	*/
