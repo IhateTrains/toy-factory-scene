@@ -7,10 +7,10 @@
 #include <cmath>				// Define for sqrt
 
 
-constexpr auto GL_PI = 3.14;
-constexpr auto rozmiar_fabryki = 3 * 128;
-constexpr auto wys_scian = 300;
-constexpr auto szczyt_dachu = 500;
+constexpr double GL_PI = 3.14;
+constexpr double rozmiar_fabryki = 384; //3 * 128
+constexpr double wys_scian = 300;
+constexpr double szczyt_dachu = 500;
 
 void podloga() {
 	glColor3d(1, 1, 1);
@@ -554,7 +554,9 @@ void zabawka(const bool glowa = true, const bool rece = true) {
 }
 
 void tasmociag() {
-	double szerokoscTasmociagu = 50;
+	double szerokoscTasmy = 50;
+	double ilSegmentow = 40;
+	double poczTasmociaguX = -rozmiar_fabryki - 200;
 
 	glDisable(GL_CULL_FACE);
 	glPolygonMode(GL_BACK, GL_FILL);
@@ -562,41 +564,41 @@ void tasmociag() {
 	// gora
 	glBegin(GL_QUADS);
 	glNormal3d(0, 1, 0);
-	for (int i = 0; i < 36; ++i) {
+	for (int i = 0; i < ilSegmentow; ++i) {
 		if (i % 2 == 0) {
 			glColor3d(0, 0, 0);
 		}
 		else {
 			glColor3d(0.2, 0.2, 0.2);
 		}
-		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, szerokoscTasmociagu);
-		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, 0);
-		glVertex3d(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 0);
-		glVertex3d(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, szerokoscTasmociagu);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, szerokoscTasmy);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, 0);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 0);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 + tasmociagStartPos, 35, szerokoscTasmy);
 	}
 	glEnd();
 
 	// dol
 	glBegin(GL_QUADS);
 	glNormal3d(0, -1, 0);
-	for (int i = 0; i < 36; ++i) {
+	for (int i = 0; i < ilSegmentow; ++i) {
 		if (i % 2 == 0) {
 			glColor3d(0, 0, 0);
 		}
 		else {
 			glColor3d(0.2, 0.2, 0.2);
 		}
-		glVertex3d(-500 + static_cast<double>(i) * 30 - tasmociagStartPos, 5, szerokoscTasmociagu);
-		glVertex3d(-500 + static_cast<double>(i) * 30 - tasmociagStartPos, 5, 0);
-		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 - tasmociagStartPos, 5, 0);
-		glVertex3d(-500 + static_cast<double>(i) * 30 + 30 - tasmociagStartPos, 5, szerokoscTasmociagu);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 - tasmociagStartPos, 5, szerokoscTasmy);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 - tasmociagStartPos, 5, 0);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 + 30 - tasmociagStartPos, 5, 0);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 + 30 - tasmociagStartPos, 5, szerokoscTasmy);
 	}
 	glEnd();
 
 	// zabawki
-	for (int i = 0; i < 36; i += 2) {
+	for (int i = 0; i < ilSegmentow; i += 2) {
 		glPushMatrix();
-		glTranslated(-500 + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 12.5);
+		glTranslated(poczTasmociaguX + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 12.5);
 		if (i < 10) {
 			zabawka(false, false);
 		}
@@ -701,5 +703,3 @@ void dwa_roboty() {
 	robot(rot1, rot2, rot3, false, 1);
 	glPopMatrix();
 }
-
-
