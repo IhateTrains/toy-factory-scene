@@ -559,6 +559,7 @@ void zabawka(const bool glowa = true, const bool rece = true) {
 
 void tasmociag() {
 	double szerokoscTasmy = 50;
+	double szerokoscSegmentu = 30;
 	double ilSegmentow = 40;
 	double poczTasmociaguX = -rozmiar_fabryki - 200;
 
@@ -575,10 +576,10 @@ void tasmociag() {
 		else {
 			glColor3d(0.2, 0.2, 0.2);
 		}
-		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, szerokoscTasmy);
-		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 + 30 + tasmociagStartPos, 35, 0);
-		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 0);
-		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 + tasmociagStartPos, 35, szerokoscTasmy);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * szerokoscSegmentu + szerokoscSegmentu + tasmociagStartPos, 35, szerokoscTasmy);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * szerokoscSegmentu + szerokoscSegmentu + tasmociagStartPos, 35, 0);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * szerokoscSegmentu + tasmociagStartPos, 35, 0);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * szerokoscSegmentu + tasmociagStartPos, 35, szerokoscTasmy);
 	}
 	glEnd();
 
@@ -592,21 +593,21 @@ void tasmociag() {
 		else {
 			glColor3d(0.2, 0.2, 0.2);
 		}
-		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 - tasmociagStartPos, 5, szerokoscTasmy);
-		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 - tasmociagStartPos, 5, 0);
-		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 + 30 - tasmociagStartPos, 5, 0);
-		glVertex3d(poczTasmociaguX + static_cast<double>(i) * 30 + 30 - tasmociagStartPos, 5, szerokoscTasmy);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * szerokoscSegmentu - tasmociagStartPos, 5, szerokoscTasmy);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * szerokoscSegmentu - tasmociagStartPos, 5, 0);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * szerokoscSegmentu + szerokoscSegmentu - tasmociagStartPos, 5, 0);
+		glVertex3d(poczTasmociaguX + static_cast<double>(i) * szerokoscSegmentu + szerokoscSegmentu - tasmociagStartPos, 5, szerokoscTasmy);
 	}
 	glEnd();
 
 	// zabawki
 	for (int i = 0; i < ilSegmentow; i += 2) {
 		glPushMatrix();
-		glTranslated(poczTasmociaguX + static_cast<double>(i) * 30 + tasmociagStartPos, 35, 12.5);
+		glTranslated(poczTasmociaguX + static_cast<double>(i) * szerokoscSegmentu + tasmociagStartPos, 35, 12.5);
 		if (i < 10) {
 			zabawka(false, false);
 		}
-		else if (i < 18) {
+		else if (i < 22) {
 			zabawka(true, false);
 		}
 		else {
@@ -627,6 +628,16 @@ void tasmociag() {
 			walec(50, 15);
 		glPopMatrix();
 	}
+
+	// konce tasmociagu
+	glColor3d(0, 0, 0);
+	glPushMatrix();
+	glTranslated(poczTasmociaguX - 60, 20, 0);
+	ramie(16, 16, 52, 120);
+	glTranslated(ilSegmentow *szerokoscSegmentu, 0, 0);
+	ramie(16, 16, 52, 120);
+	glPopMatrix();
+
 
 	glPolygonMode(GL_BACK, GL_LINE);
 	glEnable(GL_CULL_FACE);
@@ -676,7 +687,7 @@ void robot(const double d1, const double d2, const double d3, const bool zReka, 
 	glPopMatrix();
 }
 
-void ur16e() {
+void ur16e(const double d1, const double d2, const double d3, const bool zReka, const double rotacjaReki) {
 	double rotacjaDolu = 5;
 
 	glPushMatrix();

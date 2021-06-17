@@ -39,4 +39,4 @@ void robot(double d1, double d2, double d3, const bool zReka, const double rotac
 
 void dwa_roboty();
 
-void ur16e();
+void ur16e(double d1, double d2, double d3, const bool zReka, const double rotacjaReki);
