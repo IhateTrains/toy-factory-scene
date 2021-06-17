@@ -255,7 +255,7 @@ void RenderScene() {
 	glPushMatrix();
 		glTranslated(100, 50, -65);
 
-		// pumy
+		// roboty PUMA
 		glPushMatrix();
 			robot(rot1, rot2, rot3, robotZReka, 1);
 			glTranslated(25, -25, -55);
