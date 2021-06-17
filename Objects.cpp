@@ -1,10 +1,10 @@
 #include "Objects.h"
 #include "Normal.h"
 
-#include <Windows.h>            // Window defines
+#include <Windows.h>
 #include <gl/GL.h>              // OpenGL
 #include <gl/GLU.h>             // GLU library
-#include <cmath>				// Define for sqrt
+#include <cmath>				// for sqrt
 
 
 constexpr double GL_PI = 3.14;
@@ -39,7 +39,7 @@ void trawa() {
 void podloga() {
 	glColor3d(1, 1, 1);
 	const double k = 3;
-	const double f = 30;
+	const double f = 20;
 
 	// podloga fabryki
 	glDisable(GL_CULL_FACE);
@@ -90,7 +90,7 @@ void sciany() {
 	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
 	glBindTexture(GL_TEXTURE_2D, texture[2]);
 
-	const double f = 50;
+	const double f = 25;
 	glBegin(GL_QUADS);
 	// sciana tylna
 	glNormal3d(0, 0, 1);
@@ -724,7 +724,7 @@ void ur16e(const double d1, const double d2, const double d3, const bool zGlowa)
 	// czesc 5
 	glTranslated(0, 0, 35);
 	glRotated(-90, 1, 0, 0);
-	glRotated(90, 0, 1, 0);
+	glRotated(90+d3, 0, 1, 0);
 	glColor3d(0.7, 0.7, 0.7);
 	walec(65, 9);
 	// czesc 6
@@ -739,8 +739,10 @@ void ur16e(const double d1, const double d2, const double d3, const bool zGlowa)
 	walec(25, 10);
 	glRotated(90, 1, 0, 0);
 	glRotated(180, 0, 1, 0);
-	glTranslated(0, -wysokoscGlowy, 0);
-	glowaZabawki();
+	if (zGlowa) {
+		glTranslated(0, -wysokoscGlowy, 0);
+		glowaZabawki();
+	}
 
 	glPopMatrix();
 }

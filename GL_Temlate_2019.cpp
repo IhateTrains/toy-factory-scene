@@ -38,12 +38,14 @@ double cameraZoom = 1;
 bool pokazDach = true;
 
 bool robotZReka = false;
+bool robotZGlowa = false;
 
 
 // dla robota PUMA
 double rot1 = -180, rot2 = 0, rot3 = 0;
 // dla robota cobot ur16e
-double rot4, rot5, rot6;
+//double rot4 = 0, rot5 = 10, rot6=-50;
+double rot4 = -270, rot5 = 0, rot6=0;
 // dla zabawek
 double rotA = -75, rotB = 15;
 
@@ -251,31 +253,33 @@ void RenderScene() {
 	tasmociag();
 
 	glPushMatrix();
-	glTranslated(120, 50, -65);
+		glTranslated(100, 50, -65);
 
-	// pumy
-	glPushMatrix();
-		robot(rot1, rot2, rot3, robotZReka, 1);
-		glTranslated(25, -25, -55);
-		skrzynka();
-		glColor3d(1, 0.5, 0);
-	glPopMatrix();
-	glPushMatrix();
-		glTranslated(-40, 0, 185);
-		glRotated(180, 0, 1, 0);
-		glColor3d(1, 0.5, 0);
-		robot(rot1, rot2, rot3, robotZReka, -1);
-		glTranslated(25, -25, -55);
-		skrzynka();
-	glPopMatrix();
-	// robot UR16e
-	glPushMatrix();
-	glTranslated(-310, -50, 0);
-	//glRotated(-90, 0, 1, 0);
-	ur16e(rot4, rot5, rot6, robotZReka);
-	glTranslated(25, 25, -55);
-	skrzynka();
-	glPopMatrix();
+		// pumy
+		glPushMatrix();
+			robot(rot1, rot2, rot3, robotZReka, 1);
+			glTranslated(25, -25, -55);
+			skrzynka();
+			glColor3d(1, 0.5, 0);
+		glPopMatrix();
+		glPushMatrix();
+			glTranslated(-40, 0, 185);
+			glRotated(180, 0, 1, 0);
+			glColor3d(1, 0.5, 0);
+			robot(rot1, rot2, rot3, robotZReka, -1);
+			glTranslated(25, -25, -55);
+			skrzynka();
+		glPopMatrix();
+		// robot UR16e
+		glPushMatrix();
+			glTranslated(-300, -50, -5);
+			glPushMatrix();
+				glRotated(180, 0, 1, 0);
+				ur16e(rot4, rot5, rot6, robotZGlowa);
+				glTranslated(90, 25, 30);
+				skrzynka();
+			glPopMatrix();
+		glPopMatrix();
 
 	glPopMatrix();
 
@@ -617,22 +621,36 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 				if (licznik <= 18) {
 					rot1 += 10;
 					rot2 -= 1.5;
+					if (licznik <= 9) {
+						rot4 -= 90 / 9;
+					}
+					else {
+						rot5 -= 30 / 9;
+						rot6 -= 35 / 9;
+					}
 				}
 			}
 			else if (licznik <= 69) {
 				robotZReka = true;
+				robotZGlowa = true;
 				rot1 -= 10;
 				rot2 += 1.5;
 				rot3 += 5;
+
+				rot5 += 30 / 9;
+				rot6 += 35 / 9;
 			}
 			else if (licznik <= 78) {
 				rot1 -= 10;
 				rot2 += 1.5;
 				rot3 -= 5;
+
+				rot4 += 90 / 9;
 			}
 			else if (licznik <= 78 + 1) {
 				tasmociagStartPos = 0;
 				robotZReka = false;
+				robotZGlowa = false;
 			}
 			else {
 				licznik = 0;
