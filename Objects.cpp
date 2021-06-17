@@ -12,6 +12,14 @@ constexpr double rozmiar_fabryki = 384; //3 * 128
 constexpr double wys_scian = 300;
 constexpr double szczyt_dachu = 500;
 
+// parametry zabawki
+constexpr double dlugoscNogi = 25;
+constexpr double wysokoscKorpusu = 30;
+constexpr double gruboscKorpusu = 10;
+constexpr double szerokoscKorpusu = 35;
+constexpr double wysokoscGlowy = 20;
+constexpr double szerokoscGlowy = szerokoscKorpusu - 10;
+
 
 void trawa() {
 	const double k = 3;
@@ -486,16 +494,26 @@ void ramieZabawki() {
 	ramie(5, 5, 5, 8);
 }
 
+void glowaZabawki() {
+	prostopadloscian(gruboscKorpusu, wysokoscGlowy, szerokoscGlowy);
+	// lewe oko
+	glPushMatrix();
+	glColor3d(1, 0, 0);
+	glTranslated(gruboscKorpusu, wysokoscGlowy - 8, 6);
+	glRotated(90, 0, 1, 0);
+	walec(1, 3);
+	glPopMatrix();
+	// prawe oko
+	glPushMatrix();
+	glColor3d(1, 0, 0);
+	glTranslated(gruboscKorpusu, wysokoscGlowy - 8, szerokoscGlowy - 6);
+	glRotated(90, 0, 1, 0);
+	walec(1, 3);
+	glPopMatrix();
+}
+
 void zabawka(const bool glowa = true, const bool rece = true) {
 	glColor3d(0.1, 0.3, 0.5);
-	const double dlugoscNogi = 25;
-
-	const double wysokoscKorpusu = 30;
-	const double gruboscKorpusu = 10;
-	const double szerokoscKorpusu = 35;
-
-	const double wysokoscGlowy = 20;
-	const double szerokoscGlowy = szerokoscKorpusu - 10;
 
 	// noga robota
 	glPushMatrix();
@@ -516,26 +534,9 @@ void zabawka(const bool glowa = true, const bool rece = true) {
 	glPopMatrix();
 
 	if (glowa) {
-		// glowa robota
 		glPushMatrix();
-
 		glTranslated(0, dlugoscNogi + wysokoscKorpusu, 0);
-		prostopadloscian(gruboscKorpusu, wysokoscGlowy, szerokoscGlowy);
-		// lewe oko
-		glPushMatrix();
-		glColor3d(1, 0, 0);
-		glTranslated(gruboscKorpusu, wysokoscGlowy - 8, 6);
-		glRotated(90, 0, 1, 0);
-		walec(1, 3);
-		glPopMatrix();
-		// prawe oko
-		glPushMatrix();
-		glColor3d(1, 0, 0);
-		glTranslated(gruboscKorpusu, wysokoscGlowy - 8, szerokoscGlowy - 6);
-		glRotated(90, 0, 1, 0);
-		walec(1, 3);
-		glPopMatrix();
-
+		glowaZabawki();
 		glPopMatrix();
 	}
 
@@ -650,14 +651,11 @@ void robot(const double d1, const double d2, const double d3, const bool zReka, 
 	// f
 	glRotated(-90, 1, 0, 0);
 	glTranslated(0, 0, -50);
-
 	// g
 	walec(5, 30);
-
 	// h
 	glTranslated(0, 0, 5);
 	walec(40, 10);
-
 	// i
 	glTranslated(0, 0, 40);
 	glRotated(d1, 0, 0, 1);
@@ -691,23 +689,54 @@ void robot(const double d1, const double d2, const double d3, const bool zReka, 
 }
 
 void ur16e(const double d1, const double d2, const double d3, const bool zGlowa) {
-	double rotacjaDolu = 5;
+	double rotacjaDolu = 0;
+	int d3a = 45;
 
 	glPushMatrix();
 
+	//czesc 1
 	glRotated(-90, 1, 0, 0);
-	walec(5, 12);
-	glTranslated(0, 0, 5);
+	//glRotated(d1, 0, 0, 1);
+	glColor3d(0.7, 0.7, 0.7);
+	walec(22, 15);
+	glTranslated(0, 0, 22);
 	glRotated(rotacjaDolu, 0, 0, 1);
-	walec(30, 10);
-
-	glTranslated(0, 0, 30);
+	glColor3d(0.4, 0.4, 0.4);
+	walec(30, 12);
+	// czesc 2
+	glTranslated(0, 0, 18);
 	glRotated(90, 1, 0, 0);
-	walec(40, 10);
-	/*glTranslated(0, 30, 0);
-	glRotated(90, 1, 0, 0);
+	//glRotated(d2, 0, 0, 1);
+	glColor3d(0.4, 0.4, 0.4);
+	walec(40, 12);
+	// czesc 3
+	glTranslated(0, 0, 28);
+	glRotated(-90, 1, 0, 0);
+	glColor3d(0.7, 0.7, 0.7);
 	walec(90, 10);
-	*/
+	// czesc 4
+	glTranslated(0, 0, 85);
+	glRotated(-90, 1, 0, 0);
+	glTranslated(0, 0, -12);
+	glColor3d(0.4, 0.4, 0.4);
+	walec(45, 12);
+	// czesc 5
+	glTranslated(0, 0, 35);
+	glRotated(-90, 1, 0, 0);
+	glRotated(90, 0, 1, 0);
+	glColor3d(0.7, 0.7, 0.7);
+	walec(65, 9);
+	// czesc 6
+	glTranslated(0, 0, 65);
+	glRotated(90, 1, 0, 0);
+	glTranslated(0, 0, -30);
+	glColor3d(0.4, 0.4, 0.4);
+	walec(45, 10);
+	// czesc 7
+	glRotated(90, 0, 1, 0);
+	glTranslated(-10, 19, -15);
+	walec(25, 10);
+
 	glPopMatrix();
 }
 

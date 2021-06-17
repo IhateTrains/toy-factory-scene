@@ -42,6 +42,8 @@ bool robotZReka = false;
 
 // dla robota PUMA
 double rot1 = -180, rot2 = 0, rot3 = 0;
+// dla robota cobot ur16e
+double rot4, rot5, rot6;
 // dla zabawek
 double rotA = -75, rotB = 15;
 
@@ -268,8 +270,9 @@ void RenderScene() {
 	glPopMatrix();
 	// robot UR16e
 	glPushMatrix();
-	glTranslated(-100, -50, 0);
-	ur16e(rot1, rot2, rot3, robotZReka);
+	glTranslated(-260, -50, 0);
+	glRotated(-90, 0, 1, 0);
+	ur16e(rot4, rot5, rot6, robotZReka);
 	glPopMatrix();
 
 	glPopMatrix();
