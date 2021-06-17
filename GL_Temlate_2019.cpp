@@ -154,8 +154,8 @@ void SetupRC()
 	glMateriali(GL_FRONT,GL_SHININESS,128);
 
 
-	// White background
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	// light blue background
+	glClearColor(0.8f, 0.9f, 1.0f, 1.0f);
 	// Black brush
 	glColor3d(0.0, 0.0, 0.0);
 }
@@ -251,7 +251,7 @@ void RenderScene() {
 	tasmociag();
 
 	glPushMatrix();
-	glTranslated(70, 50, -65);
+	glTranslated(120, 50, -65);
 
 	// pumy
 	glPushMatrix();
@@ -270,7 +270,7 @@ void RenderScene() {
 	glPopMatrix();
 	// robot UR16e
 	glPushMatrix();
-	glTranslated(-260, -50, 0);
+	glTranslated(-310, -50, 0);
 	glRotated(-90, 0, 1, 0);
 	ur16e(rot4, rot5, rot6, robotZReka);
 	glPopMatrix();

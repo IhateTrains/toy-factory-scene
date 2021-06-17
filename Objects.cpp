@@ -561,13 +561,14 @@ void zabawka(const bool glowa = true, const bool rece = true) {
 void tasmociag() {
 	double szerokoscTasmy = 50;
 	double szerokoscSegmentu = 30;
-	double ilSegmentow = 40;
+	double ilSegmentow = 38;
 	double poczTasmociaguX = -rozmiar_fabryki - 200;
 
 	glDisable(GL_CULL_FACE);
 	glPolygonMode(GL_BACK, GL_FILL);
 
 	// gora
+	glMateriali(GL_FRONT, GL_SHININESS, 128);
 	glBegin(GL_QUADS);
 	glNormal3d(0, 1, 0);
 	for (int i = 0; i < ilSegmentow; ++i) {
@@ -601,8 +602,9 @@ void tasmociag() {
 	}
 	glEnd();
 
+	glMateriali(GL_FRONT, GL_SHININESS, 128);
 	// zabawki
-	for (int i = 0; i < ilSegmentow; i += 2) {
+	for (int i = 2; i < ilSegmentow-2; i += 2) {
 		glPushMatrix();
 		glTranslated(poczTasmociaguX + static_cast<double>(i) * szerokoscSegmentu + tasmociagStartPos, 35, 12.5);
 		if (i < 12) {
