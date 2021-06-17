@@ -6,6 +6,7 @@ extern double rot1, rot2, rot3;
 extern double rotA, rotB;
 
 
+void trawa();
 void podloga();
 void sciany();
 void dach();

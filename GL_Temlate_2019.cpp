@@ -240,6 +240,7 @@ void RenderScene() {
 	/////////////////////////////////////////////////////////////////
 	glTranslated(0, -50, 0);
 	podloga();
+	trawa();
 	sciany();
 	if (pokazDach) {
 		dach();
@@ -248,6 +249,7 @@ void RenderScene() {
 	tasmociag();
 
 	glPushMatrix();
+
 	glTranslated(70, 50, -65);
 
 	glPushMatrix();
@@ -265,6 +267,9 @@ void RenderScene() {
 		glTranslated(25, -25, -55);
 		skrzynka();
 	glPopMatrix();
+
+
+
 	glPopMatrix();
 
 	okna();

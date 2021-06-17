@@ -12,6 +12,22 @@ constexpr double rozmiar_fabryki = 384; //3 * 128
 constexpr double wys_scian = 300;
 constexpr double szczyt_dachu = 500;
 
+
+void trawa() {
+	const double k = 3;
+	const double f = 30;
+	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
+	glBindTexture(GL_TEXTURE_2D, texture[4]);
+	glBegin(GL_QUADS);
+	glNormal3d(0, 1, 0);
+	glTexCoord2d(0.0, 0.0); glVertex3d(-k * 1024, -1, -k * 1024);
+	glTexCoord2d(0.0, f); glVertex3d(-k * 1024, -1, k * 1024);
+	glTexCoord2d(f, f); glVertex3d(k * 1024, -1, k * 1024);
+	glTexCoord2d(f, 0.0); glVertex3d(k * 1024, -1, -k * 1024);
+	glEnd();
+	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
+}
+
 void podloga() {
 	glColor3d(1, 1, 1);
 	const double k = 3;
@@ -34,18 +50,6 @@ void podloga() {
 
 	glEnable(GL_CULL_FACE);
 	glPolygonMode(GL_BACK, GL_LINE);
-
-	// trawa
-	glEnable(GL_TEXTURE_2D); // W³¹cz teksturowanie
-	glBindTexture(GL_TEXTURE_2D, texture[4]);
-	glBegin(GL_QUADS);
-	glNormal3d(0, 1, 0);
-	glTexCoord2d(0.0, 0.0); glVertex3d(-k * 1024, -1, -k * 1024);
-	glTexCoord2d(0.0, f); glVertex3d(-k * 1024, -1, k * 1024);
-	glTexCoord2d(f, f); glVertex3d(k * 1024, -1, k * 1024);
-	glTexCoord2d(f, 0.0); glVertex3d(k * 1024, -1, -k * 1024);
-	glEnd();
-	glDisable(GL_TEXTURE_2D); // Wy³¹cz teksturowanie
 }
 
 void okna() {
