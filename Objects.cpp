@@ -604,7 +604,7 @@ void tasmociag() {
 	for (int i = 0; i < ilSegmentow; i += 2) {
 		glPushMatrix();
 		glTranslated(poczTasmociaguX + static_cast<double>(i) * szerokoscSegmentu + tasmociagStartPos, 35, 12.5);
-		if (i < 10) {
+		if (i < 12) {
 			zabawka(false, false);
 		}
 		else if (i < 22) {

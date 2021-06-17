@@ -470,7 +470,7 @@ LRESULT CALLBACK WndProc(HWND    hWnd,
 	{
 		// Window creation, setup for OpenGL
 	case WM_CREATE:
-		SetTimer(hWnd,101,50, nullptr);
+		SetTimer(hWnd,101,40, nullptr);
 
 		// Store the device context
 		hDC = GetDC(hWnd);
