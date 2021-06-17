@@ -488,6 +488,7 @@ void ramie(const double r1, const double r2, const double h, const double d) {
 }
 
 void ramieZabawki() {
+	glColor3d(0.1, 0.3, 0.5);
 	ramie(5, 5, 5, 8);
 	glTranslated(12, 0, 0);
 	glRotated(rotB, 0, 0, 1);
@@ -495,6 +496,7 @@ void ramieZabawki() {
 }
 
 void glowaZabawki() {
+	glColor3d(0.1, 0.3, 0.5);
 	prostopadloscian(gruboscKorpusu, wysokoscGlowy, szerokoscGlowy);
 	// lewe oko
 	glPushMatrix();
@@ -513,8 +515,14 @@ void glowaZabawki() {
 }
 
 void zabawka(const bool glowa = true, const bool rece = true) {
-	glColor3d(0.1, 0.3, 0.5);
+	glColor3d(0.1, 0.5, 0.3);
+	// korpus robota
+	glPushMatrix();
+	glTranslated(0, dlugoscNogi, -5);
+	prostopadloscian(gruboscKorpusu, wysokoscKorpusu, szerokoscKorpusu);
+	glPopMatrix();
 
+	glColor3d(0.1, 0.3, 0.5);
 	// noga robota
 	glPushMatrix();
 	glTranslated(1, 0, 0);
@@ -525,12 +533,6 @@ void zabawka(const bool glowa = true, const bool rece = true) {
 	glPushMatrix();
 	glTranslated(1, 0, 15);
 	prostopadloscian(8, dlugoscNogi, 10);
-	glPopMatrix();
-
-	// korpus robota
-	glPushMatrix();
-	glTranslated(0, dlugoscNogi, -5);
-	prostopadloscian(gruboscKorpusu, wysokoscKorpusu, szerokoscKorpusu);
 	glPopMatrix();
 
 	if (glowa) {
@@ -606,6 +608,7 @@ void tasmociag() {
 	// zabawki
 	for (int i = 2; i < ilSegmentow-2; i += 2) {
 		glPushMatrix();
+
 		glTranslated(poczTasmociaguX + static_cast<double>(i) * szerokoscSegmentu + tasmociagStartPos, 35, 12.5);
 		if (i < 12) {
 			zabawka(false, false);
@@ -691,24 +694,20 @@ void robot(const double d1, const double d2, const double d3, const bool zReka, 
 }
 
 void ur16e(const double d1, const double d2, const double d3, const bool zGlowa) {
-	double rotacjaDolu = 0;
-	int d3a = 45;
-
 	glPushMatrix();
 
 	//czesc 1
 	glRotated(-90, 1, 0, 0);
-	//glRotated(d1, 0, 0, 1);
 	glColor3d(0.7, 0.7, 0.7);
 	walec(22, 15);
 	glTranslated(0, 0, 22);
-	glRotated(rotacjaDolu, 0, 0, 1);
+	glRotated(d1, 0, 0, 1);
 	glColor3d(0.4, 0.4, 0.4);
 	walec(30, 12);
 	// czesc 2
 	glTranslated(0, 0, 18);
 	glRotated(90, 1, 0, 0);
-	//glRotated(d2, 0, 0, 1);
+	glRotated(d2, 0, 0, 1);
 	glColor3d(0.4, 0.4, 0.4);
 	walec(40, 12);
 	// czesc 3
@@ -738,6 +737,10 @@ void ur16e(const double d1, const double d2, const double d3, const bool zGlowa)
 	glRotated(90, 0, 1, 0);
 	glTranslated(-10, 19, -15);
 	walec(25, 10);
+	glRotated(90, 1, 0, 0);
+	glRotated(180, 0, 1, 0);
+	glTranslated(0, -wysokoscGlowy, 0);
+	glowaZabawki();
 
 	glPopMatrix();
 }

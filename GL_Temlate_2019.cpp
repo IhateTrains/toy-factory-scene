@@ -271,8 +271,10 @@ void RenderScene() {
 	// robot UR16e
 	glPushMatrix();
 	glTranslated(-310, -50, 0);
-	glRotated(-90, 0, 1, 0);
+	//glRotated(-90, 0, 1, 0);
 	ur16e(rot4, rot5, rot6, robotZReka);
+	glTranslated(25, 25, -55);
+	skrzynka();
 	glPopMatrix();
 
 	glPopMatrix();
